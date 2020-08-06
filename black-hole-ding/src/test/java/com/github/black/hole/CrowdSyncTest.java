@@ -11,6 +11,8 @@ import com.dingtalk.api.request.OapiUserDeleteRequest;
 import com.dingtalk.api.request.OapiUserGetByMobileRequest;
 import com.dingtalk.api.request.OapiUserGetDeptMemberRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
+import com.dingtalk.api.request.OapiUserListbypageRequest;
+import com.dingtalk.api.request.OapiUserUpdateRequest;
 import com.dingtalk.api.response.OapiDepartmentCreateResponse;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
@@ -19,6 +21,8 @@ import com.dingtalk.api.response.OapiUserDeleteResponse;
 import com.dingtalk.api.response.OapiUserGetByMobileResponse;
 import com.dingtalk.api.response.OapiUserGetDeptMemberResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
+import com.dingtalk.api.response.OapiUserListbypageResponse;
+import com.dingtalk.api.response.OapiUserUpdateResponse;
 import com.github.black.hole.ding.DingApplication;
 import com.github.black.hole.ding.dto.DingAppConfig;
 import com.github.black.hole.ding.handler.AccessTokenDTO;
@@ -39,9 +43,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -55,6 +62,8 @@ import java.util.stream.Collectors;
 public class CrowdSyncTest {
 
     private static Logger logger = LoggerFactory.getLogger(CrowdSyncTest.class);
+
+    private static final List<String> position = Lists.newArrayList("骑手", "骑士");
 
     @Autowired DingAppConfig crowdOrgConfig;
     @Autowired AccessTokenHandler accessTokenHandler;
@@ -80,35 +89,108 @@ public class CrowdSyncTest {
     }
 
     @Test
-    public void updateOutDept() throws Exception{
+    public void updateAdmin() throws Exception {
         AccessTokenDTO dto =
                 accessTokenHandler.getAccessToken(
                         crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
         DingTalkClient client1 =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
         OapiDepartmentListRequest request1 = new OapiDepartmentListRequest();
-//        request1.setId("91171117");
         OapiDepartmentListResponse response1 = client1.execute(request1, dto.getAccessToken());
-//        logger.info("allDepartment:{}", JSON.toJSONString(response1.getDepartment()));
-        Map<Long, List<OapiDepartmentListResponse.Department>> deptMap =
+        List<Long> deptList =
                 response1.getDepartment().stream()
-                        .filter(item->Objects.nonNull(item.getParentid()))
-                        .collect(Collectors.groupingBy(OapiDepartmentListResponse.Department::getParentid));
-        response1.getDepartment().stream()
-                .filter(item-> CollectionUtils.isEmpty(deptMap.get(item.getId())))
-                .forEach(item->{
-                    try{
-                    DingTalkClient client =
-                            new DefaultDingTalkClient("https://oapi.dingtalk.com/department/update");
-                    OapiDepartmentUpdateRequest request = new OapiDepartmentUpdateRequest();
-                    request.setId(item.getId());
-                    request.setOuterDept(true);
-                    OapiDepartmentUpdateResponse response = client.execute(request, dto.getAccessToken());
-                    System.out.println(JSON.toJSONString(response));
-                    }catch (Exception e){
+                        .filter(item -> Objects.nonNull(item.getParentid()))
+                        .map(OapiDepartmentListResponse.Department::getId)
+                        .collect(Collectors.toList());
+        deptList.forEach(
+                deptId -> {
+                    try {
+                        long offset = 0L;
+                        boolean isFinish = false;
+                        List<String> userIds = Lists.newArrayList();
+                        do {
+                            DingTalkClient client2 =
+                                    new DefaultDingTalkClient(
+                                            "https://oapi.dingtalk.com/user/listbypage");
+                            OapiUserListbypageRequest request2 = new OapiUserListbypageRequest();
+                            request2.setDepartmentId(deptId);
+                            request2.setOffset(offset);
+                            request2.setSize(100L);
+                            OapiUserListbypageResponse response2 =
+                                    client2.execute(request2, dto.getAccessToken());
+                            userIds.addAll(
+                                    Optional.ofNullable(response2.getUserlist())
+                                            .orElse(Collections.emptyList()).stream()
+                                            .filter(Objects::nonNull)
+                                            .filter(item -> !position.contains(item.getPosition()))
+                                            .map(OapiUserListbypageResponse.Userlist::getUserid)
+                                            .collect(Collectors.toList()));
+                            offset += response2.getUserlist().size();
+                            isFinish =
+                                    CollectionUtils.isEmpty(response2.getUserlist())
+                                            || response2.getUserlist().size() == 0;
+                        } while (!isFinish);
+
+                        userIds.forEach(
+                                userId -> {
+                                    try {
+                                        DingTalkClient client =
+                                                new DefaultDingTalkClient(
+                                                        "https://oapi.dingtalk.com/user/update");
+                                        OapiUserUpdateRequest request = new OapiUserUpdateRequest();
+                                        request.setUserid(userId);
+                                        request.setIsSenior(Boolean.TRUE);
+                                        request.setIsHide(Boolean.TRUE);
+
+                                        OapiUserUpdateResponse response =
+                                                client.execute(request, dto.getAccessToken());
+                                        System.out.println(response);
+                                    } catch (Exception e) {
+
+                                    }
+                                });
+                    } catch (Exception e) {
 
                     }
                 });
+    }
+
+    @Test
+    public void updateOutDept() throws Exception {
+        AccessTokenDTO dto =
+                accessTokenHandler.getAccessToken(
+                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
+        DingTalkClient client1 =
+                new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
+        OapiDepartmentListRequest request1 = new OapiDepartmentListRequest();
+        //        request1.setId("91171117");
+        OapiDepartmentListResponse response1 = client1.execute(request1, dto.getAccessToken());
+        //        logger.info("allDepartment:{}", JSON.toJSONString(response1.getDepartment()));
+        Map<Long, List<OapiDepartmentListResponse.Department>> deptMap =
+                response1.getDepartment().stream()
+                        .filter(item -> Objects.nonNull(item.getParentid()))
+                        .collect(
+                                Collectors.groupingBy(
+                                        OapiDepartmentListResponse.Department::getParentid));
+        response1.getDepartment().stream()
+                .filter(item -> CollectionUtils.isEmpty(deptMap.get(item.getId())))
+                .forEach(
+                        item -> {
+                            try {
+                                DingTalkClient client =
+                                        new DefaultDingTalkClient(
+                                                "https://oapi.dingtalk.com/department/update");
+                                OapiDepartmentUpdateRequest request =
+                                        new OapiDepartmentUpdateRequest();
+                                request.setId(item.getId());
+                                request.setOuterDept(true);
+                                OapiDepartmentUpdateResponse response =
+                                        client.execute(request, dto.getAccessToken());
+                                System.out.println(JSON.toJSONString(response));
+                            } catch (Exception e) {
+
+                            }
+                        });
     }
 
     @Test
@@ -119,13 +201,14 @@ public class CrowdSyncTest {
         DingTalkClient client1 =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
         OapiDepartmentListRequest request1 = new OapiDepartmentListRequest();
-        request1.setId("91171117");
+        //        request1.setId("358518191");
         OapiDepartmentListResponse response1 = client1.execute(request1, dto.getAccessToken());
         logger.info("allDepartment:{}", JSON.toJSONString(response1.getDepartment()));
-        List<Long> departmentIds = Lists.newArrayList(75954L);
-//                response1.getDepartment().stream()
-//                        .map(OapiDepartmentListResponse.Department::getId)
-//                        .collect(Collectors.toList());
+        Set<Long> departmentIds =
+                response1.getDepartment().stream()
+                        .map(OapiDepartmentListResponse.Department::getId)
+                        .collect(Collectors.toSet());
+        //        departmentIds.add(Long.valueOf("358518191"));
 
         departmentIds.forEach(
                 deptId -> {
@@ -141,28 +224,38 @@ public class CrowdSyncTest {
                         userIds.forEach(
                                 userId -> {
                                     try {
-//                                        DingTalkClient client11 =
-//                                                new DefaultDingTalkClient(
-//                                                        "https://oapi.dingtalk.com/user/get");
-//                                        OapiUserGetRequest request = new OapiUserGetRequest();
-//                                        request.setUserid(userId);
-//                                        OapiUserGetResponse response =
-//                                                client11.execute(request, dto.getAccessToken());
-//                                        Map<String, String> extMap =
-//                                                getExtendMap(response.getExtattr());
-//                                        if (!response.getActive()
-//                                                || CollectionUtils.isEmpty(extMap)) {
-                                            DingTalkClient client111 =
-                                                    new DefaultDingTalkClient(
-                                                            "https://oapi.dingtalk.com/user/delete");
-                                            OapiUserDeleteRequest request111 =
-                                                    new OapiUserDeleteRequest();
-                                            request111.setUserid(userId);
-                                            OapiUserDeleteResponse response111 =
-                                                    client111.execute(
-                                                            request111, dto.getAccessToken());
-                                            System.out.println(response111);
-//                                        }
+                                        //                                        DingTalkClient
+                                        // client11 =
+                                        //                                                new
+                                        // DefaultDingTalkClient(
+                                        //
+                                        // "https://oapi.dingtalk.com/user/get");
+                                        //                                        OapiUserGetRequest
+                                        // request = new OapiUserGetRequest();
+                                        //
+                                        // request.setUserid(userId);
+                                        //
+                                        // OapiUserGetResponse response =
+                                        //
+                                        // client11.execute(request, dto.getAccessToken());
+                                        //                                        Map<String,
+                                        // String> extMap =
+                                        //
+                                        // getExtendMap(response.getExtattr());
+                                        //                                        if
+                                        // (!response.getActive()
+                                        //                                                ||
+                                        // CollectionUtils.isEmpty(extMap)) {
+                                        DingTalkClient client111 =
+                                                new DefaultDingTalkClient(
+                                                        "https://oapi.dingtalk.com/user/delete");
+                                        OapiUserDeleteRequest request111 =
+                                                new OapiUserDeleteRequest();
+                                        request111.setUserid(userId);
+                                        OapiUserDeleteResponse response111 =
+                                                client111.execute(request111, dto.getAccessToken());
+                                        System.out.println(response111);
+                                        //                                        }
                                     } catch (Exception e) {
 
                                     }
@@ -181,7 +274,7 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/get");
         OapiDepartmentGetRequest request = new OapiDepartmentGetRequest();
-        request.setId("375499116");
+        request.setId("379377880");
         request.setHttpMethod("GET");
         OapiDepartmentGetResponse response = client.execute(request, dto.getAccessToken());
         System.out.println(response);
@@ -243,14 +336,14 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/create");
         OapiDepartmentCreateRequest request = new OapiDepartmentCreateRequest();
-        request.setParentid("358518191");
-        request.setCreateDeptGroup(false);
-        for (int i = 0; i < 10; i++) {
-            request.setName("临时部门" + i);
-            request.setSourceIdentifier("temporaryGroup_" + i);
-            OapiDepartmentCreateResponse response = client.execute(request, dto.getAccessToken());
-            System.out.println(JSON.toJSONString(response));
-        }
+        request.setParentid("1");
+        //        request.setCreateDeptGroup(false);
+        //        for (int i = 0; i < 10; i++) {
+        request.setName("众包分层群组");
+        request.setSourceIdentifier("CROWD_LAYERED_GROUP_ROOT_");
+        OapiDepartmentCreateResponse response = client.execute(request, dto.getAccessToken());
+        System.out.println(JSON.toJSONString(response));
+        //        }
     }
 
     @Test

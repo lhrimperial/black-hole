@@ -12,7 +12,6 @@ import com.dingtalk.api.request.OapiUserCreateRequest;
 import com.dingtalk.api.request.OapiUserGetByMobileRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
 import com.dingtalk.api.request.OapiUserListbypageRequest;
-import com.dingtalk.api.request.OapiUserSimplelistRequest;
 import com.dingtalk.api.response.OapiDepartmentCreateResponse;
 import com.dingtalk.api.response.OapiDepartmentDeleteResponse;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
@@ -22,7 +21,6 @@ import com.dingtalk.api.response.OapiUserCreateResponse;
 import com.dingtalk.api.response.OapiUserGetByMobileResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
-import com.dingtalk.api.response.OapiUserSimplelistResponse;
 import com.github.black.hole.ding.DingApplication;
 import com.github.black.hole.ding.dto.DingAppConfig;
 import com.github.black.hole.ding.handler.AccessTokenDTO;
@@ -57,6 +55,21 @@ public class AccessTokenTest {
 
     @Autowired DingAppConfig noticeConfig;
     @Autowired AccessTokenHandler accessTokenHandler;
+
+    @Test
+    public void createDepartment11() throws Exception {
+        AccessTokenDTO dto =
+                accessTokenHandler.getAccessToken(
+                        noticeConfig.getAppKey(), noticeConfig.getAppSecret());
+        DingTalkClient client =
+                new DefaultDingTalkClient("https://oapi.dingtalk.com/department/create");
+        OapiDepartmentCreateRequest request = new OapiDepartmentCreateRequest();
+        request.setParentid("1");
+        request.setName("众包分层群组测试");
+        request.setSourceIdentifier("CROWD_LAYERED_GROUP_ROOT_");
+        OapiDepartmentCreateResponse response = client.execute(request, dto.getAccessToken());
+        System.out.println(JSON.toJSONString(response));
+    }
 
     @Test
     public void createUser() throws Exception {
@@ -96,7 +109,8 @@ public class AccessTokenTest {
     public void getDepartmentUser() throws Exception {
         AccessTokenDTO dto =
                 accessTokenHandler.getAccessToken(
-                        "dinguenpya4moj9yzuju", "oPlzb-72XCVbpLUUqB3sRNR2KQwxtqnbqi2bki_dGtN9Zi5jPWfy6qqtOyKZM2de");
+                        "dinguenpya4moj9yzuju",
+                        "oPlzb-72XCVbpLUUqB3sRNR2KQwxtqnbqi2bki_dGtN9Zi5jPWfy6qqtOyKZM2de");
 
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/user/listbypage");
@@ -131,7 +145,8 @@ public class AccessTokenTest {
     public void updateDepartment() throws Exception {
         AccessTokenDTO dto =
                 accessTokenHandler.getAccessToken(
-                        "ding2qurqklmvjg5pxlm", "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
+                        "ding2qurqklmvjg5pxlm",
+                        "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/update");
         OapiDepartmentUpdateRequest request = new OapiDepartmentUpdateRequest();
@@ -159,7 +174,8 @@ public class AccessTokenTest {
     public void getDepartmentList() throws Exception {
         AccessTokenDTO dto =
                 accessTokenHandler.getAccessToken(
-                        "ding2qurqklmvjg5pxlm", "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
+                        "ding2qurqklmvjg5pxlm",
+                        "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
 
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
@@ -173,8 +189,10 @@ public class AccessTokenTest {
     public void getUserByMobileTest() throws Exception {
         AccessTokenDTO dto =
                 accessTokenHandler.getAccessToken(
-                        "ding2qurqklmvjg5pxlm", "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
-//        {"agentId":"789887943","appKey":"ding2qurqklmvjg5pxlm","appSecret":"_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr"}
+                        "ding2qurqklmvjg5pxlm",
+                        "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr");
+        //
+        // {"agentId":"789887943","appKey":"ding2qurqklmvjg5pxlm","appSecret":"_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr"}
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get_by_mobile");
         OapiUserGetByMobileRequest request = new OapiUserGetByMobileRequest();

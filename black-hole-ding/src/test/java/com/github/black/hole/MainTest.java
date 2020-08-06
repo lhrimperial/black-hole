@@ -1,15 +1,11 @@
 package com.github.black.hole;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author hairen.long
@@ -18,7 +14,13 @@ import java.util.stream.IntStream;
 public class MainTest {
 
     public static void main(String[] args) {
-        IntStream.range(3,19).forEach(i->System.out.println(i));
+        float Max = 180, Min = 60;
+        for (int i = 0; i < 10; i++) {
+            double r =Math.random();
+            System.out.println(r);
+            BigDecimal bd = new BigDecimal(r);
+            System.out.println(bd.setScale(2, BigDecimal.ROUND_HALF_UP)); // 保留2位小数并四舍五入
+        }
     }
 
     public static void test() {
