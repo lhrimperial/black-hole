@@ -12,5 +12,5 @@ public interface CalculateHandlerInvoker {
      * @param object
      * @return
      */
-    <T> CalculateHandlerInvoker fireCalculate(T object);
+    CalculateHandlerInvoker fireCalculate(Object object);
 }

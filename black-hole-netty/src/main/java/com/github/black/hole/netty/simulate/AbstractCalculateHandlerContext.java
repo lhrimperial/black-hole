@@ -36,7 +36,7 @@ public abstract class AbstractCalculateHandlerContext implements CalculateHandle
     }
 
     @Override
-    public <T> AbstractCalculateHandlerContext fireCalculate(T object) {
+    public AbstractCalculateHandlerContext fireCalculate(Object object) {
         invokeCalculate(findContext(), object);
         return this;
     }
@@ -47,11 +47,11 @@ public abstract class AbstractCalculateHandlerContext implements CalculateHandle
         return ctx;
     }
 
-    static <T> void invokeCalculate(final AbstractCalculateHandlerContext next, T object) {
+    static void invokeCalculate(final AbstractCalculateHandlerContext next, Object object) {
         next.invokeCalculate(object);
     }
 
-    private <T> void invokeCalculate(T object) {
+    private void invokeCalculate(Object object) {
         try {
             handler().calculate(this, object);
         } catch (Exception e) {

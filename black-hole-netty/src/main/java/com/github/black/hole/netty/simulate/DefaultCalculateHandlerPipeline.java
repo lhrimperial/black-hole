@@ -1,6 +1,5 @@
 package com.github.black.hole.netty.simulate;
 
-
 /**
  * @author hairen.long
  * @date 2020/7/14
@@ -23,8 +22,10 @@ public class DefaultCalculateHandlerPipeline implements CalculateHandlerPipeline
         tail.prev = head;
     }
 
-    private AbstractCalculateHandlerContext newContext(String name, CalculateHandler handler) {
-        return new DefaultCalculateHandlerContext(this, name, handler);
+    @Override
+    public CalculateHandlerPipeline fireCalculate(Object object) {
+        AbstractCalculateHandlerContext.invokeCalculate(head, object);
+        return this;
     }
 
     @Override
@@ -40,18 +41,16 @@ public class DefaultCalculateHandlerPipeline implements CalculateHandlerPipeline
         return this;
     }
 
+    private AbstractCalculateHandlerContext newContext(String name, CalculateHandler handler) {
+        return new DefaultCalculateHandlerContext(this, name, handler);
+    }
+
     private void addLast0(AbstractCalculateHandlerContext newCtx) {
         AbstractCalculateHandlerContext prev = tail.prev;
         newCtx.prev = prev;
         newCtx.next = tail;
         prev.next = newCtx;
         tail.prev = newCtx;
-    }
-
-    @Override
-    public <T> CalculateHandlerPipeline fireCalculate(T object) {
-        AbstractCalculateHandlerContext.invokeCalculate(head, object);
-        return this;
     }
 
     private static String generateName0(Class<?> handlerType) {
@@ -74,15 +73,14 @@ public class DefaultCalculateHandlerPipeline implements CalculateHandlerPipeline
         return arg;
     }
 
-    final class HeadContext<T> extends AbstractCalculateHandlerContext
-            implements CalculateHandler<T> {
+    final class HeadContext extends AbstractCalculateHandlerContext implements CalculateHandler {
 
         HeadContext(CalculateHandlerPipeline pipeline) {
             super(pipeline, HEAD_NAME, false);
         }
 
         @Override
-        public void calculate(CalculateHandlerContext context, T object) throws Exception {
+        public void calculate(CalculateHandlerContext context, Object object) throws Exception {
             context.fireCalculate(object);
         }
 
@@ -92,15 +90,14 @@ public class DefaultCalculateHandlerPipeline implements CalculateHandlerPipeline
         }
     }
 
-    final class TailContext<T> extends AbstractCalculateHandlerContext
-            implements CalculateHandler<T> {
+    final class TailContext extends AbstractCalculateHandlerContext implements CalculateHandler {
 
         TailContext(CalculateHandlerPipeline pipeline) {
             super(pipeline, TAIL_NAME, true);
         }
 
         @Override
-        public void calculate(CalculateHandlerContext context, T object) throws Exception {}
+        public void calculate(CalculateHandlerContext context, Object object) throws Exception {}
 
         @Override
         public CalculateHandler handler() {

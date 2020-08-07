@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
  * @date 2020/8/7
  */
 @Service
-public class HelloWorldCalculateHandler implements CalculateHandler {
-    @Override
-    public void calculate(CalculateHandlerContext handlerContext, Object object) throws Exception {
+public class HelloWorldCalculateHandler extends AbstractCalculateHandler {
 
+    @Override
+    protected void calculate0(GradeCalculateContext context) {
+        // TODO
     }
 }
