@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.black.hole.sboot.server.persistence.mapper.GradeScoreMapper">
+
+    <sql id="all_columns">
+        id, rule_id, score, rank, city_id, data_version, is_active, created_at, updated_at
+    </sql>
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into grade_score (rule_id, score,rank, city_id, data_version)
+        values
+        <foreach collection="records" separator="," item="item">
+            (#{item.ruleId}, #{item.score}, #{item.rank}, #{item.cityId},#{item.dataVersion})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate">
+        update grade_score
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="score = case" suffix="end,">
+                <foreach collection="records" item="item" index="index">
+                    when id = #{item.id} then #{item.score}
+                </foreach>
+            </trim>
+            <trim prefix="data_version = case" suffix="end,">
+                <foreach collection="records" item="item" index="index">
+                    when id = #{item.id} then #{item.dataVersion}
+                </foreach>
+            </trim>
+            <trim prefix="rank = case" suffix="end,">
+                <foreach collection="records" item="item" index="index">
+                    when id = #{item.id} then #{item.rank}
+                </foreach>
+            </trim>
+            is_active = 1
+        </trim>
+        where id in
+        <foreach collection="records" index="index" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="sql_condition">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ruleId != null">
+            and rule_id = #{ruleId}
+        </if>
+        <if test="cityId != null">
+            and city_id = #{cityId}
+        </if>
+        <if test="dataVersion != null">
+            and data_version = #{dataVersion}
+        </if>
+        <if test="teamIds != null and teamIds.size > 0">
+            and team_id in
+            <foreach collection="teamIds" item="teamId" open="(" close=")" separator=",">
+                #{teamId}
+            </foreach>
+        </if>
+        <if test="ruleIds != null and ruleIds.size > 0">
+            and rule_id in
+            <foreach collection="ruleIds" item="ruleId" open="(" close=")" separator=",">
+                #{ruleId}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="getByCondition"
+            resultType="com.github.black.hole.sboot.server.persistence.entity.GradeScoreDO">
+        select
+        <include refid="all_columns"/>
+        from grade_score
+        <where>
+            <include refid="sql_condition"/>
+            and is_active = 1
+        </where>
+        <if test="offset != null and limit != null">
+            limit #{offset},#{limit}
+        </if>
+    </select>
+
+</mapper>

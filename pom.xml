@@ -8,12 +8,9 @@
     <artifactId>black-hole</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>black-hole-ding</module>
-        <module>black-hole-db</module>
         <module>black-hole-netty</module>
-        <module>black-hole-design</module>
-        <module>black-hole-mvel</module>
         <module>black-hole-gateway</module>
+        <module>black-hole-sboot</module>
     </modules>
     <packaging>pom</packaging>
 
