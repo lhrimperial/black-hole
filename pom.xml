@@ -10,7 +10,7 @@
     <modules>
         <module>black-hole-netty</module>
         <module>black-hole-gateway</module>
-        <module>black-hole-sboot</module>
+        <module>black-hole-furnace</module>
     </modules>
     <packaging>pom</packaging>
 
