@@ -7,7 +7,6 @@ import com.github.black.hole.sboot.server.persistence.mapper.GradeScoreMapper;
 import com.github.black.hole.sboot.server.repo.GradeScoreRepo;
 import com.github.black.hole.sboot.server.repo.domain.GradeScoreBO;
 import com.github.black.hole.sboot.server.validateor.ParamCheck;
-import com.github.black.hole.sboot.server.validateor.ParamCheckAspect;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,7 +24,6 @@ import java.util.Objects;
 public class GradeScoreRepoImpl implements GradeScoreRepo {
 
     @Autowired private GradeScoreMapper gradeScoreMapper;
-
 
     @Override
     @ParamCheck

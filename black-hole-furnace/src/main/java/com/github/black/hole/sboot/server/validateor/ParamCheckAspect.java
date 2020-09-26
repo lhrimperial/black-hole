@@ -39,7 +39,9 @@ public class ParamCheckAspect {
 
     @Before("execution(public * com.github.black.hole.sboot.server.service.*.*())")
     public void doBefore(JoinPoint joinPoint) {
-        System.out.println("do in Aspect before method called! args: " + JSON.toJSONString(joinPoint.getArgs()));
+        System.out.println(
+                "do in Aspect before method called! args: "
+                        + JSON.toJSONString(joinPoint.getArgs()));
     }
 
     @Before("@annotation(paramCheck)")
