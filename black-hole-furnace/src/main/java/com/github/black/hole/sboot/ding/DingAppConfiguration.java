@@ -29,6 +29,12 @@ public class DingAppConfiguration {
     @Value("${crowd.appSecret}")
     private String CROWD_SECRET;
 
+    @Value("${crowd.token}")
+    private String token;
+
+    @Value("${crowd.aesKey}")
+    private String aesKey;
+
     @Bean(name = "noticeConfig")
     public DingAppConfig getNoticeConfig() {
         return DingAppConfig.builder()
@@ -44,6 +50,8 @@ public class DingAppConfiguration {
                 .agentId(CROWD_ID)
                 .appKey(CROWD_KEY)
                 .appSecret(CROWD_SECRET)
+                .token(token)
+                .aesKey(aesKey)
                 .build();
     }
 }

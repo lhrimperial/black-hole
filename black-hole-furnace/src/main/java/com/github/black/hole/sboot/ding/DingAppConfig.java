@@ -20,4 +20,8 @@ public class DingAppConfig {
     private String appKey;
     /** app 密匙 */
     private String appSecret;
+
+    private String token;
+
+    private String aesKey;
 }

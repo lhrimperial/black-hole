@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.github.black.hole</groupId>
-    <artifactId>black-hole-sboot</artifactId>
+    <artifactId>black-hole-furnace</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>black-hole-sboot</name>
+    <name>black-hole-furnace</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -28,8 +28,7 @@
         <mvel.version>2.4.5.Final</mvel.version>
         <easy-excel.version>2.2.6</easy-excel.version>
         <apache.poi.version>4.0.1</apache.poi.version>
-        <!--        <dingtalk-sdk-java.version>1479188381469-20180227</dingtalk-sdk-java.version>-->
-        <dingtalk-sdk-java.version>1479188381469-20191128aa</dingtalk-sdk-java.version>
+        <alibaba-dingtalk.version>1.0.1</alibaba-dingtalk.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <!--spring boot-->
         <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
@@ -44,11 +43,17 @@
         <p3c-pmd.version>2.0.0</p3c-pmd.version>
         <google.errorprone.version>2.3.3</google.errorprone.version>
 
+        <bcprov-ext-jdk16.version>1.45</bcprov-ext-jdk16.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!--tools-->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-ext-jdk16</artifactId>
+                <version>${bcprov-ext-jdk16.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -97,11 +102,10 @@
                 <version>${easy-excel.version}</version>
             </dependency>
             <dependency>
-                <groupId>dingtalk-sdk-java</groupId>
-                <artifactId>taobao-sdk-java-auto</artifactId>
-                <version>${dingtalk-sdk-java.version}</version>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+                <version>${alibaba-dingtalk.version}</version>
             </dependency>
-
 
             <!--spring-->
             <dependency>
@@ -203,8 +207,8 @@
             <artifactId>easyexcel</artifactId>
         </dependency>
         <dependency>
-            <groupId>dingtalk-sdk-java</groupId>
-            <artifactId>taobao-sdk-java-auto</artifactId>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibaba-dingtalk-service-sdk</artifactId>
         </dependency>
 
         <!--spring-->
@@ -253,6 +257,11 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-ext-jdk16</artifactId>
         </dependency>
     </dependencies>
 
@@ -468,4 +477,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
