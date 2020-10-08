@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2020/8/30
  */
 @SpringBootApplication
-@MapperScan("com.github.black.hole.sboot.server.persistence")
 public class SbootMain {
 
     public static void main(String[] args) {
