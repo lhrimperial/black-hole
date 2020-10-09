@@ -1,4 +1,6 @@
 -- https://zhuanlan.zhihu.com/p/72223558
+-- https://ya2.top/articles/mysql%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%8F%98%E9%87%8F/
+
 /*
 sql 的执行顺序
 FROM
@@ -61,17 +63,78 @@ select * from Student where sid in(
 select distinct sid from SC where sid != '01' and cid in(select cid from SC where sid = '01')
 group by sid having count(cid) = (select count(cid) from SC where sid = '01'));
 
+-- 查询没学过"张三"老师讲授的任一门课程的学生姓名
+select * from Student where sid not in(
+select sc.sid from SC sc 
+left join Course c on sc.cid = c.cid
+left join Teacher t on c.tid = t.tid
+where t.tname = '张三');
 
+-- 查询两门及其以上不及格课程的同学的学号，姓名及其平均成绩
+select s.*,t.vscore from Student s right join 
+(select sc.sid,avg(sc.score) vscore from (select * from SC where score < 60) sc
+group by sc.sid having count(sc.cid) >= 2) t on s.sid = t.sid;
 
+-- 检索" 01 "课程分数小于 60，按分数降序排列的学生信息
+select s.* from Student s right join 
+(select * from SC where cid = '01' and score < 60) t on s.sid = t.sid
+ order by t.score desc;
 
+-- 按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩
+select sc.*,s.vscore from SC sc left join 
+(select sid,avg(score) vscore from SC group by sid) s
+on  sc.sid = s.sid order by s.vscore desc;
 
+-- 查询各科成绩最高分、最低分和平均分 课程 ID，课程 name，最高分，最低分，平均分，及格率，中等率，优良率，优秀率
+select cid 课程ID,
+	count(sid) 课程人数,
+    max(score) 最高分,
+    min(score) 最低分,
+    avg(score) 平均分,
+    SUM(及格) / COUNT(sid) AS 及格率,
+	SUM(中等) / COUNT(sid) AS 中等率,
+	SUM(优良) / COUNT(sid) AS 优良率,
+	SUM(优秀) / COUNT(sid) AS 优秀率 
+    from
+(select *,
+	case when score >= 60 then 1 else 0 end as 及格,
+    case when score >= 70 then 1 else 0 end as 中等,
+    case when score >= 80 then 1 else 0 end as 优良,
+    case when score >= 90 then 1 else 0 end as 优秀
+from SC ) t group by cid order by count(sid) desc,cid;
 
+-- 按各科成绩进行排序，并显示排名， Score 重复时保留名次空缺
+select sc.*,t.rank from SC sc left join(
+select a.cid,a.sid,count(a.score) rank from SC a 
+left join SC b on a.cid = b.cid and a.score < b.score
+group by a.cid,a.sid) t
+on sc.sid = t.sid and sc.cid = t.cid
+order by sc.cid,t.rank ;
 
+select a.cid,a.sid,a.score ascore,b.score bscore from SC a 
+left join SC b on a.cid = b.cid and a.score < b.score order by a.cid,ascore desc;
 
+-- 按各科成绩进行行排序，并显示排名， Score 重复时合并名次
+select sc.*,t.rank from SC sc left join(
+select a.cid,a.sid,count(b.score)+1 rank from SC a 
+left join SC b on a.cid = b.cid and a.score < b.score
+group by a.cid,a.sid) t
+on sc.sid = t.sid and sc.cid = t.cid
+order by sc.cid,t.rank ;
 
-
-
-
+SELECT 
+  a.*,
+  @rank := @rank + 1 AS rank 
+FROM
+  (SELECT 
+    sid,
+    SUM(score) 
+  FROM
+    SC 
+  GROUP BY sid 
+  ORDER BY SUM(score) DESC) a,
+  (SELECT 
+    @rank := 0) b ;
 
 
 

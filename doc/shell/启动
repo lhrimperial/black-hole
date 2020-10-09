@@ -1,0 +1,45 @@
+#!/bin/sh
+
+TEAM="demo"
+APP_ID="demo"
+MAIN_CLASS="mainClass"
+
+SCRIPTS_DIR=`dirname "$0"`
+PROJECT_DIR=`cd $SCRIPTS_DIR && pwd`
+DT=`date +"%Y%m%d_%H%M%S"`
+
+MEM_OPTS="{{_ .JVM_OPTS}}"
+GC_OPTS="$GC_OPTS -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=70 -XX:CMSTriggerRatio=70 -XX:+ParallelRefProcEnabled"
+GC_OPTS="$GC_OPTS -Xloggc:${PROJECT_DIR}/logs/gc_${DT}.log"
+GC_OPTS="$GC_OPTS -XX:+PrintGCDateStamps -XX:+PrintGCDetails"
+GC_OPTS="$GC_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${PROJECT_DIR}/tmp/heapdump_${DT}.hprof"
+START_OPTS="$START_OPTS -Djava.io.tmpdir=$PROJECT_DIR/tmp/"
+START_OPTS="$START_OPTS -Duser.dir=$PROJECT_DIR"
+START_OPTS="$START_OPTS -DAPPID=${APP_ID} -Dproject.name=demo"
+START_OPTS="$START_OPTS -DTEAM=${TEAM}"
+START_OPTS="$START_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888"
+CLASS_PATH="$PROJECT_DIR/conf:$PROJECT_DIR/lib/*:$CLASS_PATH"
+
+# ewatch agent start
+# 机房全量安装则使用下第一行条件，只安装ppe环境则使用下第二行条件(默认)
+#if [ -d "/data/.ewatch/ewatch-install/" ]; then
+if [ -d "/data/.ewatch/ewatch-install/" ] && [ $ELE_STAGE = 'ppe' -o $ELE_STAGE = 'beta' ]; then
+
+  if [[ "$START_OPTS" != *-javaagent:/data/.ewatch/* ]]; then
+    START_OPTS="$START_OPTS -javaagent:/data/.ewatch/ewatch-install/sandbox/lib/sandbox-agent.jar=/data/.ewatch/ewatch-install/sandbox/cfg/sandbox.properties"
+  fi
+
+fi
+# ewatch agent end
+
+#run java
+mkdir -p "$PROJECT_DIR/tmp/"
+mkdir -p "$PROJECT_DIR/logs/"
+if [ $MESOS_TASK_ID ] ;then
+    echo $MESOS_TASK_ID
+    exec java -server $MEM_OPTS $GC_OPTS $JMX_OPTS $START_OPTS -classpath $CLASS_PATH $MAIN_CLASS
+else
+    echo "NOT FOUND MESOS_TASK_ID"
+    nohup java -server $MEM_OPTS $GC_OPTS $JMX_OPTS $START_OPTS -classpath $CLASS_PATH $MAIN_CLASS >output 2>&1 &
+fi
+# END OF FILE
