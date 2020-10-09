@@ -103,3 +103,7 @@ https://blog.csdn.net/danny_idea/category_9494940.html
 
 
 https://blog.csdn.net/weixin_43314519/article/details/107133526
+
+
+### ZK
+docker exec -it first-zk zkCli.sh

@@ -11,6 +11,7 @@
         <module>black-hole-netty</module>
         <module>black-hole-gateway</module>
         <module>black-hole-furnace</module>
+        <module>black-hole-dubbo</module>
     </modules>
     <packaging>pom</packaging>
 
