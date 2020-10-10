@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
                 UserDTO.builder().userName("andy").password("123").build(),
                 UserDTO.builder().userName("json").password("456").build());
     }
+
+    @Override
+    public UserDTO saveAndReturn(UserDTO userDTO) {
+        return userDTO;
+    }
 }

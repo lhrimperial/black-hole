@@ -16,4 +16,12 @@ public interface UserService {
      * @return
      */
     List<UserDTO> listUser();
+
+    /**
+     * save
+     *
+     * @param userDTO
+     * @return
+     */
+    UserDTO saveAndReturn(UserDTO userDTO);
 }
