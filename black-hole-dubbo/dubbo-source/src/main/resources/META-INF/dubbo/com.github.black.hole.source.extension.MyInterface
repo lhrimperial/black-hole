@@ -1,0 +1,3 @@
+defaults=com.github.black.hole.source.extension.DefaultExtensionImpl
+other=com.github.black.hole.source.extension.OtherExtensionImpl
+adaptive=com.github.black.hole.source.extension.MyAdaptiveExtension
