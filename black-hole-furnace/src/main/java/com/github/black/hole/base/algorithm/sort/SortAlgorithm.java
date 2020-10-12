@@ -37,11 +37,64 @@ public class SortAlgorithm {
         // bubbleSort2(arr,arr.length);
         // System.out.println("选择排序：" + Arrays.toString(arr));
 
-        mergeSort(arr, 0, arr.length-1);
-        System.out.println("归并排序：" + Arrays.toString(arr));
+        // mergeSort(arr, 0, arr.length - 1);
+        // System.out.println("归并排序：" + Arrays.toString(arr));
+
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println("快速排序：" + Arrays.toString(arr));
     }
 
-    public static void mergeSort(int[] arr, int low, int high){
+
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    /**
+     * 快排核心思想就是分治和分区
+     * 快排是一种原地、不稳定的排序算法
+     * 时间复杂度平均时间复杂度O(nlogn)，最坏时间复杂度O(n2)
+     *
+     * @param arr
+     * @param low
+     * @param high
+     */
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int index = getIndex(arr, low, high);
+            quickSort(arr, low, index - 1);
+            quickSort(arr, index + 1, high);
+        }
+    }
+
+    private static int getIndex(int[] arr, int low, int high) {
+        int temp = arr[low];
+        while (low < high) {
+            while (low < high && temp <= arr[high]) {
+                high--;
+            }
+            arr[low] = arr[high];
+            while (low < high && arr[low] <= temp) {
+                low++;
+            }
+            arr[high] = arr[low];
+        }
+        arr[low] = temp;
+
+        return low;
+    }
+
+    /**
+     * 分治是一种解决问题的处理思想，递归是一种编程技巧
+     * 稳定排序，最好情况、最坏情况，还是平均情况，时间复杂度都是 O(nlogn)。
+     * 不是原地排序，空间复杂度O(n)
+     *
+     * @param arr
+     * @param low
+     * @param high
+     */
+    public static void mergeSort(int[] arr, int low, int high) {
         if (low < high) {
             int mid = low + (high - low) / 2;
             mergeSort(arr, 0, mid);
@@ -50,7 +103,7 @@ public class SortAlgorithm {
         }
     }
 
-    public static void merge(int[] arr, int low, int mid, int high){
+    public static void merge(int[] arr, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
         int left = low;
         int right = mid + 1;
@@ -58,7 +111,7 @@ public class SortAlgorithm {
         while (left <= mid && right <= high) {
             if (arr[left] < arr[right]) {
                 temp[curr++] = arr[left++];
-            }else {
+            } else {
                 temp[curr++] = arr[right++];
             }
         }
@@ -71,7 +124,7 @@ public class SortAlgorithm {
             temp[curr++] = arr[right++];
         }
         for (int n = 0, len = temp.length; n < len; n++) {
-            arr[n] = temp[n];
+            arr[n + low] = temp[n];
         }
 
     }
