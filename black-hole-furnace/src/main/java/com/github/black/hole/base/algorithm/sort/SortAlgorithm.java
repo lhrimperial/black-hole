@@ -79,4 +79,10 @@ public class SortAlgorithm {
             }
         }
     }
+
+    public static void heapSort(int[] arr){
+
+    }
+
+
 }
