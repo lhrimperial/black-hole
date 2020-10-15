@@ -39,7 +39,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -63,57 +62,6 @@ public class CrowdSyncTest {
 
     @Autowired DingAppConfig crowdOrgConfig;
     @Autowired AccessTokenHandler accessTokenHandler;
-
-    private Map<String, String> getExtendMap(String extattr) {
-        if (com.google.common.base.Strings.isNullOrEmpty(extattr)) {
-            return Maps.newHashMap();
-        }
-        Map<String, String> extattrMap = Maps.newHashMap();
-        String ext = extattr.substring(1, extattr.length() - 1);
-        String[] extArr = ext.split(",");
-        if (extArr.length > 0) {
-            Arrays.stream(extArr)
-                    .forEach(
-                            item -> {
-                                String[] temp = item.split("=");
-                                if (temp.length == 2) {
-                                    extattrMap.put(temp[0].trim(), temp[1].trim());
-                                }
-                            });
-        }
-        return extattrMap;
-    }
-
-    @Test
-    public void getAllUser() throws Exception {
-        AccessTokenDTO dto =
-                accessTokenHandler.getAccessToken(
-                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
-        long offset = 0L;
-        boolean isFinish = false;
-        List<String> userIds = Lists.newArrayList();
-        Long deptId = 81721025L;
-        do {
-            DingTalkClient client2 =
-                    new DefaultDingTalkClient("https://oapi.dingtalk.com/user/listbypage");
-            OapiUserListbypageRequest request2 = new OapiUserListbypageRequest();
-            request2.setDepartmentId(deptId);
-            request2.setOffset(offset);
-            request2.setSize(100L);
-            OapiUserListbypageResponse response2 = client2.execute(request2, dto.getAccessToken());
-            userIds.addAll(
-                    Optional.ofNullable(response2.getUserlist()).orElse(Collections.emptyList())
-                            .stream()
-                            .filter(Objects::nonNull)
-                            .map(OapiUserListbypageResponse.Userlist::getUserid)
-                            .collect(Collectors.toList()));
-            offset += response2.getUserlist().size();
-            isFinish =
-                    CollectionUtils.isEmpty(response2.getUserlist())
-                            || response2.getUserlist().size() == 0;
-        } while (!isFinish);
-        System.out.println(userIds.size());
-    }
 
     @Test
     public void updateAdmin() throws Exception {
@@ -360,7 +308,7 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/get");
         OapiDepartmentGetRequest request = new OapiDepartmentGetRequest();
-        request.setId("376883955");
+        request.setId("394693577");
         request.setHttpMethod("GET");
         OapiDepartmentGetResponse response = client.execute(request, dto.getAccessToken());
         System.out.println(response);
