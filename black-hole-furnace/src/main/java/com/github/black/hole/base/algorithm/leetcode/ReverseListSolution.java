@@ -1,6 +1,7 @@
 package com.github.black.hole.base.algorithm.leetcode;
 
 import java.util.Objects;
+import java.util.Stack;
 import java.util.stream.IntStream;
 
 /**
@@ -25,16 +26,50 @@ public class ReverseListSolution {
         print(head);
         System.out.println("翻转：");
         print(reverseList(head));
+
+        // System.out.println("\n翻转1：");
+        // print(reverseList1(head));
     }
 
+    /**
+     * 栈方式
+     *
+     * @param head
+     * @return
+     */
+    public static ListNode reverseList1(ListNode head) {
+        if (Objects.isNull(head) || Objects.isNull(head.next)) {
+            return head;
+        }
+        Stack<ListNode> stack = new Stack<>();
+        while (Objects.nonNull(head.next)) {
+            stack.push(head);
+            head = head.next;
+        }
+
+        ListNode node = head;
+        while (!stack.isEmpty()) {
+            node.next = stack.pop();
+            node = node.next;
+        }
+        node.next = null;
+        return head;
+    }
+
+    /**
+     * 快慢指针
+     *
+     * @param head
+     * @return
+     */
     public static ListNode reverseList(ListNode head) {
         if (Objects.isNull(head) || Objects.isNull(head.next)) {
             return head;
         }
-        ListNode cur = head;
 
+        ListNode cur = head;
         ListNode pre = null;
-        while (cur != null) {
+        while (Objects.nonNull(cur)) {
             ListNode node = cur.next;
             cur.next = pre;
 

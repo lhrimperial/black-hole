@@ -1,4 +1,4 @@
-package com.github.black.hole.ding;
+package com.github.black.hole.sboot.ding.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.assertj.core.util.Strings;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
@@ -38,16 +41,12 @@ import java.util.stream.Collectors;
  * @author hairen.long
  * @date 2020/10/15
  */
+@Component
 public class CrowdSync {
 
+    private Logger logger = LoggerFactory.getLogger(CrowdSync.class);
     private AccessToken accessToken;
 
-    public static void main(String[] args) {
-        String str =
-                "\"最后跑单时间\":\"2020-08-03 19:10:28\",\"七天有效完成单\":\"0\",\"骑士ID\":\"136627810\",\"常驻商圈\":\"西湖康乐家苑快送商圈\",\"最近七天出勤\":\"0\"";
-        Map<String, String> map = getExtendMap(str);
-        System.out.println(map);
-    }
 
     private static Map<String, String> getExtendMap(String extattr) {
         if (Strings.isNullOrEmpty(extattr)) {
@@ -80,7 +79,6 @@ public class CrowdSync {
         return response.getAccessToken();
     }
 
-    @Test
     public void moveUser() throws Exception {
         accessToken =
                 AccessToken.builder()
@@ -99,17 +97,27 @@ public class CrowdSync {
                         .map(OapiDepartmentListResponse.Department::getId)
                         .collect(Collectors.toList());
         temps.add(parentTemp);
+        temps.forEach(deptId->{
+            try {
+                List<String> userIds = getUserIdByDepartment(deptId, accessToken);
+                userIds.parallelStream().forEach(userId -> {
+                    try {
+                        OapiUserGetResponse response = getUserDetail(userId, accessToken);
+                        Map<String, String> extMap = getExtendMap(response.getExtattr());
+                        String deptName = extMap.get("常驻商圈");
+                        OapiDepartmentListResponse.Department dept = allDept.get(deptName);
+                        if (Objects.nonNull(dept)) {
+                            updateUser(response, dept.getId(), accessToken);
+                        }
+                    } catch (Exception e) {
 
-        List<String> userIds = getUserIdByDepartment(parentTemp, accessToken);
-        for (String userId : userIds) {
-            OapiUserGetResponse response = getUserDetail(userId, accessToken);
-            Map<String, String> extMap = getExtendMap(response.getExtattr());
-            String deptName = extMap.get("常驻商圈");
-            OapiDepartmentListResponse.Department dept = allDept.get(deptName);
-            if (Objects.nonNull(dept)) {
-                updateUser(response, dept.getId(), accessToken);
+                    }
+                });
+            }catch (Exception e){
+
             }
-        }
+        });
+
 
         System.out.println(temps);
     }
@@ -121,7 +129,7 @@ public class CrowdSync {
         request.setUserid(response.getUserid());
         request.setDepartment(Lists.newArrayList(deptId));
         OapiUserUpdateResponse response1 = client.execute(request, dto.getAccessToken());
-        System.out.println(JSON.toJSONString(response1));
+        logger.info(JSON.toJSONString(response1));
         if (response1.isSuccess()) {
             return;
         }
