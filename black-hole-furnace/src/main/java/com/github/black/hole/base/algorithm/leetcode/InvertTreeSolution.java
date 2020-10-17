@@ -1,10 +1,8 @@
 package com.github.black.hole.base.algorithm.leetcode;
 
-import com.alibaba.fastjson.JSON;
 import com.github.black.hole.base.algorithm.tree.BinaryTree;
 import com.github.black.hole.base.algorithm.tree.TreeNode;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,6 +11,11 @@ import java.util.Objects;
  */
 public class InvertTreeSolution {
 
+    /**
+     * 翻转一棵二叉树
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         int[] arr = {11, 8, 3, 5, 4, 12, 14, 7, 2, 13, 21};
         BinaryTree tree = new BinaryTree();
@@ -37,6 +40,4 @@ public class InvertTreeSolution {
         invertTree(node.getLeft());
         invertTree(node.getRight());
     }
-
-
 }

@@ -9,6 +9,11 @@ import java.util.stream.IntStream;
  */
 public class ReverseListSolution {
 
+    /**
+     * 定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         int[] array = IntStream.rangeClosed(1, 10).toArray();
         ListNode head = new ListNode(array[0]);
