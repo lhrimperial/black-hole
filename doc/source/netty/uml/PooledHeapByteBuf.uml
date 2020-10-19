@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>io.netty.buffer.PooledHeapByteBuf</OriginalElement>
+  <nodes>
+    <node x="469.75" y="158.0">io.netty.buffer.AbstractByteBuf</node>
+    <node x="152.25" y="316.0">io.netty.buffer.PooledByteBuf</node>
+    <node x="509.125" y="395.0">io.netty.buffer.WrappedCompositeByteBuf</node>
+    <node x="385.0" y="0.0">io.netty.util.ReferenceCounted</node>
+    <node x="568.25" y="237.0">io.netty.buffer.UnpooledDuplicatedByteBuf</node>
+    <node x="534.125" y="316.0">io.netty.buffer.CompositeByteBuf</node>
+    <node x="0.0" y="395.0">io.netty.buffer.PooledUnsafeDirectByteBuf</node>
+    <node x="225.5" y="474.0">io.netty.buffer.PooledUnsafeHeapByteBuf</node>
+    <node x="498.25" y="79.0">io.netty.buffer.ByteBuf</node>
+    <node x="247.0" y="395.0">io.netty.buffer.PooledHeapByteBuf</node>
+    <node x="313.25" y="316.0">io.netty.buffer.UnpooledDirectByteBuf</node>
+    <node x="568.0" y="0.0">java.lang.Comparable</node>
+    <node x="277.25" y="237.0">io.netty.buffer.AbstractReferenceCountedByteBuf</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="io.netty.buffer.WrappedCompositeByteBuf" target="io.netty.buffer.CompositeByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.AbstractReferenceCountedByteBuf" target="io.netty.buffer.AbstractByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="412.75" y="212.0" />
+      <point x="508.5" y="212.0" />
+      <point x="-38.75" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.ByteBuf" target="io.netty.util.ReferenceCounted">
+      <point x="-24.5" y="-14.5" />
+      <point x="522.75" y="54.0" />
+      <point x="466.5" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.UnpooledDuplicatedByteBuf" target="io.netty.buffer.AbstractByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="681.75" y="212.0" />
+      <point x="586.0" y="212.0" />
+      <point x="38.75" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.AbstractByteBuf" target="io.netty.buffer.ByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.PooledUnsafeHeapByteBuf" target="io.netty.buffer.PooledHeapByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.PooledHeapByteBuf" target="io.netty.buffer.PooledByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="332.0" y="370.0" />
+      <point x="258.0" y="370.0" />
+      <point x="35.25" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.PooledByteBuf" target="io.netty.buffer.AbstractReferenceCountedByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="222.75" y="291.0" />
+      <point x="322.4166666666667" y="291.0" />
+      <point x="-90.33333333333331" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.ByteBuf" target="java.lang.Comparable">
+      <point x="24.5" y="-14.5" />
+      <point x="571.75" y="54.0" />
+      <point x="628.0" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.CompositeByteBuf" target="io.netty.buffer.AbstractReferenceCountedByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="615.625" y="291.0" />
+      <point x="503.0833333333333" y="291.0" />
+      <point x="90.33333333333331" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.PooledUnsafeDirectByteBuf" target="io.netty.buffer.PooledByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="113.5" y="370.0" />
+      <point x="187.5" y="370.0" />
+      <point x="-35.25" y="14.5" />
+    </edge>
+    <edge source="io.netty.buffer.UnpooledDirectByteBuf" target="io.netty.buffer.AbstractReferenceCountedByteBuf">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="386.0" y="212.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
