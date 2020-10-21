@@ -1,5 +1,7 @@
 package com.github.black.hole;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.black.hole.sboot.util.AesEncryptUtils;
 
 import java.math.BigDecimal;
@@ -10,9 +12,13 @@ import java.util.regex.Pattern;
 /** Unit test for simple App. */
 public class AppTest {
     public static void main(String[] args) throws Exception {
-        String str = "上海普陀区枫桥路快送商圈（(71546)";
-        String s = str.substring(0,str.indexOf("("));
-        System.out.println(s);
+        String str =
+                "{\"encrypt\":\"0RkGpVv/mivrXXicKonYIDDY9LkgDU1ZPdkodslL/aRCjKK6lKrX+wshpKyOv1/tXrPBDF6TwSuIpN4/D4rNb/FRQk364R0XxouEZU5wzr1Tvh0gZH4zINh4luJIiEXS\"}";
+       JSONObject jobj = JSON.parseObject(str);
+       System.out.println(jobj);
+
+        testAes();
+
     }
 
     public static void testSubstring() {

@@ -3,11 +3,13 @@ package com.github.black.hole.sboot.ding.controller;
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiCallBackRegisterCallBackRequest;
 import com.dingtalk.api.request.OapiDepartmentListRequest;
 import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
 import com.dingtalk.api.request.OapiUserListbypageRequest;
 import com.dingtalk.api.request.OapiUserUpdateRequest;
+import com.dingtalk.api.response.OapiCallBackRegisterCallBackResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
@@ -21,7 +23,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.assertj.core.util.Strings;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,17 @@ public class CrowdSync {
     private Logger logger = LoggerFactory.getLogger(CrowdSync.class);
     private AccessToken accessToken;
 
+    public void registerCallBack() throws Exception {
+        DingTalkClient client =
+                new DefaultDingTalkClient("https://oapi.dingtalk.com/call_back/register_call_back");
+        OapiCallBackRegisterCallBackRequest request = new OapiCallBackRegisterCallBackRequest();
+        request.setUrl("http://ifarmshop.com:9090/call/servlet");
+        request.setAesKey("c72XCVbpLUUqB3sRNR2KQwxtqnbqi2bkidGtN9Zi5jP");
+        request.setToken("123456");
+        request.setCallBackTag(Arrays.asList("user_add_org", "user_modify_org", "user_leave_org"));
+        OapiCallBackRegisterCallBackResponse response = client.execute(request, getToken());
+        logger.info(JSON.toJSONString(response));
+    }
 
     private static Map<String, String> getExtendMap(String extattr) {
         if (Strings.isNullOrEmpty(extattr)) {
@@ -61,7 +73,9 @@ public class CrowdSync {
                             item -> {
                                 String[] temp = item.split(":");
                                 if (temp.length == 2) {
-                                    extattrMap.put(temp[0].trim().replace("\"",""), temp[1].trim().replace("\"",""));
+                                    extattrMap.put(
+                                            temp[0].trim().replace("\"", ""),
+                                            temp[1].trim().replace("\"", ""));
                                 }
                             });
         }
@@ -97,27 +111,32 @@ public class CrowdSync {
                         .map(OapiDepartmentListResponse.Department::getId)
                         .collect(Collectors.toList());
         temps.add(parentTemp);
-        temps.forEach(deptId->{
-            try {
-                List<String> userIds = getUserIdByDepartment(deptId, accessToken);
-                userIds.parallelStream().forEach(userId -> {
+        temps.forEach(
+                deptId -> {
                     try {
-                        OapiUserGetResponse response = getUserDetail(userId, accessToken);
-                        Map<String, String> extMap = getExtendMap(response.getExtattr());
-                        String deptName = extMap.get("常驻商圈");
-                        OapiDepartmentListResponse.Department dept = allDept.get(deptName);
-                        if (Objects.nonNull(dept)) {
-                            updateUser(response, dept.getId(), accessToken);
-                        }
+                        List<String> userIds = getUserIdByDepartment(deptId, accessToken);
+                        userIds.parallelStream()
+                                .forEach(
+                                        userId -> {
+                                            try {
+                                                OapiUserGetResponse response =
+                                                        getUserDetail(userId, accessToken);
+                                                Map<String, String> extMap =
+                                                        getExtendMap(response.getExtattr());
+                                                String deptName = extMap.get("常驻商圈");
+                                                OapiDepartmentListResponse.Department dept =
+                                                        allDept.get(deptName);
+                                                if (Objects.nonNull(dept)) {
+                                                    updateUser(response, dept.getId(), accessToken);
+                                                }
+                                            } catch (Exception e) {
+
+                                            }
+                                        });
                     } catch (Exception e) {
 
                     }
                 });
-            }catch (Exception e){
-
-            }
-        });
-
 
         System.out.println(temps);
     }
@@ -214,8 +233,6 @@ public class CrowdSync {
         String name = dept.getName();
         return name.substring(0, name.indexOf("("));
     }
-
-
 
     @Data
     @Builder

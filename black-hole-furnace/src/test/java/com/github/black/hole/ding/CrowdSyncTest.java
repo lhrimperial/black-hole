@@ -3,6 +3,7 @@ package com.github.black.hole.ding;
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiCallBackGetCallBackRequest;
 import com.dingtalk.api.request.OapiDepartmentCreateRequest;
 import com.dingtalk.api.request.OapiDepartmentDeleteRequest;
 import com.dingtalk.api.request.OapiDepartmentGetRequest;
@@ -13,6 +14,7 @@ import com.dingtalk.api.request.OapiUserGetByMobileRequest;
 import com.dingtalk.api.request.OapiUserGetDeptMemberRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
 import com.dingtalk.api.request.OapiUserListbypageRequest;
+import com.dingtalk.api.response.OapiCallBackGetCallBackResponse;
 import com.dingtalk.api.response.OapiDepartmentCreateResponse;
 import com.dingtalk.api.response.OapiDepartmentDeleteResponse;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
@@ -62,6 +64,19 @@ public class CrowdSyncTest {
 
     @Autowired DingAppConfig crowdOrgConfig;
     @Autowired AccessTokenHandler accessTokenHandler;
+
+    @Test
+    public void getCallBack() throws Exception {
+        AccessTokenDTO dto =
+                accessTokenHandler.getAccessToken(
+                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
+        DingTalkClient client =
+                new DefaultDingTalkClient("https://oapi.dingtalk.com/call_back/get_call_back");
+        OapiCallBackGetCallBackRequest request = new OapiCallBackGetCallBackRequest();
+        request.setHttpMethod("GET");
+        OapiCallBackGetCallBackResponse response = client.execute(request, dto.getAccessToken());
+        System.out.println(response);
+    }
 
     @Test
     public void updateAdmin() throws Exception {
