@@ -9,6 +9,10 @@ import com.dingtalk.api.request.OapiDepartmentDeleteRequest;
 import com.dingtalk.api.request.OapiDepartmentGetRequest;
 import com.dingtalk.api.request.OapiDepartmentListRequest;
 import com.dingtalk.api.request.OapiDepartmentUpdateRequest;
+import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
+import com.dingtalk.api.request.OapiMessageCorpconversationGetsendprogressRequest;
+import com.dingtalk.api.request.OapiMessageCorpconversationGetsendresultRequest;
+import com.dingtalk.api.request.OapiMessageSendToConversationRequest;
 import com.dingtalk.api.request.OapiUserDeleteRequest;
 import com.dingtalk.api.request.OapiUserGetByMobileRequest;
 import com.dingtalk.api.request.OapiUserGetDeptMemberRequest;
@@ -20,6 +24,10 @@ import com.dingtalk.api.response.OapiDepartmentDeleteResponse;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
 import com.dingtalk.api.response.OapiDepartmentUpdateResponse;
+import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
+import com.dingtalk.api.response.OapiMessageCorpconversationGetsendprogressResponse;
+import com.dingtalk.api.response.OapiMessageCorpconversationGetsendresultResponse;
+import com.dingtalk.api.response.OapiMessageSendToConversationResponse;
 import com.dingtalk.api.response.OapiUserDeleteResponse;
 import com.dingtalk.api.response.OapiUserGetByMobileResponse;
 import com.dingtalk.api.response.OapiUserGetDeptMemberResponse;
@@ -29,6 +37,7 @@ import com.github.black.hole.sboot.SbootMain;
 import com.github.black.hole.sboot.ding.AccessTokenDTO;
 import com.github.black.hole.sboot.ding.AccessTokenHandler;
 import com.github.black.hole.sboot.ding.DingAppConfig;
+import com.github.black.hole.sboot.ding.controller.CrowGroup;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.assertj.core.util.Strings;
@@ -64,6 +73,53 @@ public class CrowdSyncTest {
 
     @Autowired DingAppConfig crowdOrgConfig;
     @Autowired AccessTokenHandler accessTokenHandler;
+
+    @Autowired CrowGroup crowGroup;
+
+
+    @Test
+    public void test222() throws Exception{
+        AccessTokenDTO dto =
+                accessTokenHandler.getAccessToken(
+                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/getsendprogress");
+        OapiMessageCorpconversationGetsendprogressRequest request  = new OapiMessageCorpconversationGetsendprogressRequest();
+        request.setAgentId(771858795L);
+        request.setTaskId(276843799282L);
+        OapiMessageCorpconversationGetsendprogressResponse response = client.execute(request, dto.getAccessToken());
+        System.out.println(JSON.toJSONString(response));
+
+        DingTalkClient client1 = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/getsendresult");
+        OapiMessageCorpconversationGetsendresultRequest request1  = new OapiMessageCorpconversationGetsendresultRequest();
+        request1.setAgentId(771858795L);
+        request1.setTaskId(771858795L);
+        OapiMessageCorpconversationGetsendresultResponse response1 = client1.execute(request1, dto.getAccessToken());
+        System.out.println(JSON.toJSONString(response1));
+    }
+
+    @Test
+    public void test111() throws Exception {
+        crowGroup.statisticsOwner();
+//        AccessTokenDTO dto =
+//                accessTokenHandler.getAccessToken(
+//                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
+//
+//        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2");
+//
+//        OapiMessageCorpconversationAsyncsendV2Request request = new OapiMessageCorpconversationAsyncsendV2Request();
+//        request.setUseridList("0948453840152451|296431220423633088");
+//        request.setAgentId(771858795L);
+//        request.setToAllUser(false);
+//
+//        OapiMessageCorpconversationAsyncsendV2Request.Msg msg = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
+//        msg.setMsgtype("file");
+//        msg.setFile(new OapiMessageCorpconversationAsyncsendV2Request.File());
+//        msg.getFile().setMediaId("@lAzPDgCwP9b_EvvOI0DfXs4rjncj");
+//        request.setMsg(msg);
+//
+//        OapiMessageCorpconversationAsyncsendV2Response response = client.execute(request,dto.getAccessToken());
+//        System.out.println(JSON.toJSONString(response));
+    }
 
     @Test
     public void getCallBack() throws Exception {

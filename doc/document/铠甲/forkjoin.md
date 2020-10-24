@@ -4,7 +4,7 @@
 
 ForkJoinPool运用了Fork/Join原理，使用“分而治之”的思想，将大任务分拆成小任务分配给多个线程执行，最后合并得到最终结果。把任务递归的拆分为各个子任务，这样可以更好的利用系统资源，尽可能的使用所有可用的计算能力来提升应用性能。
 
-![ForkJoinPool-fork-join](/Users/longhairen/Documents/geek_time/forkjoin/ForkJoinPool-fork-join.svg)
+![ForkJoinPool-fork-join](forkjoin.assets/ForkJoinPool-fork-join.svg)
 
 最核心的思想可以这样描述：
 
@@ -39,7 +39,9 @@ if(任务很小）{
 
 3. work-stealing（工作窃取）算法
 
-   线程池内的所有工作线程都尝试找到并执行已经提交的任务，或者是被其他活动任务创建的子任务（如果不存在就阻塞等待）。![ForkJoinPool-work-queue](/Users/longhairen/Documents/geek_time/forkjoin/ForkJoinPool-work-queue.svg)
+   线程池内的所有工作线程都尝试找到并执行已经提交的任务，或者是被其他活动任务创建的子任务（如果不存在就阻塞等待）。
+
+   ![ForkJoinPool-work-queue](forkjoin.assets/ForkJoinPool-work-queue.svg)
 
    - ForkJoinPool中维护着一个WorkQueue数组，里面存放的是ForkJoinTask任务
    - ForkJoinPool的每个工作线程ForkJoinWorkerThread都关联着一个WorkQueue数组中下标为奇数的WorkQueue
@@ -242,7 +244,7 @@ if(任务很小）{
 
 2. 整个Fork/Join 框架的执行流程
 
-![ForkJoinPool-执行流程](/Users/longhairen/Documents/geek_time/forkjoin/ForkJoinPool-执行流程.svg)
+![ForkJoinPool-执行流程](forkjoin.assets/ForkJoinPool-执行流程.svg)
 
 
 
@@ -1063,7 +1065,7 @@ private int doInvoke() {
 
 ForkJoinTask的`join()`和`invoke()`方法都可以用来获取任务的执行结果（另外还有`get`方法也是调用了`doJoin`来获取任务结果，但是会响应运行时异常），它们对外部提交任务的执行方式一致，都是通过`externalAwaitDone`方法等待执行结果。不同的是`invoke()`方法会直接执行当前任务；而`join()`方法则是在当前任务在队列 top 位时（通过`tryUnpush`方法判断）才能执行，如果当前任务不在 top 位或者任务执行失败调用`ForkJoinPool.awaitJoin`方法帮助执行或阻塞当前 join 任务。join()的执行流程：
 
-![ForkJoinPool-work-queue-Join流程](/Users/longhairen/Documents/geek_time/forkjoin/ForkJoinPool-work-queue-Join流程.svg)
+![ForkJoinPool-work-queue-Join流程](forkjoin.assets/ForkJoinPool-work-queue-Join流程.svg)
 
 
 

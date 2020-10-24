@@ -43,9 +43,8 @@ import java.util.stream.Collectors;
  * @date 2020/10/15
  */
 @Component
-public class CrowdSync {
+public class CrowdSync extends AbstractCrowd {
 
-    private Logger logger = LoggerFactory.getLogger(CrowdSync.class);
     private AccessToken accessToken;
 
     public void registerCallBack() throws Exception {
@@ -82,16 +81,7 @@ public class CrowdSync {
         return extattrMap;
     }
 
-    private String getToken() throws Exception {
-        DefaultDingTalkClient client =
-                new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
-        OapiGettokenRequest request = new OapiGettokenRequest();
-        request.setAppkey("dinguenpya4moj9yzuju");
-        request.setAppsecret("oPlzb-72XCVbpLUUqB3sRNR2KQwxtqnbqi2bki_dGtN9Zi5jPWfy6qqtOyKZM2de");
-        request.setHttpMethod(DingConstants.GET);
-        OapiGettokenResponse response = client.execute(request);
-        return response.getAccessToken();
-    }
+
 
     public void moveUser() throws Exception {
         accessToken =
