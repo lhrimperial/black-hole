@@ -2,8 +2,6 @@ package com.github.black.hole.sboot.ding;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -30,13 +28,16 @@ public class PKCS7PaddingEncryptor {
         String rstData = pkcs7padding(data.toJSONString());
         // 进行java的AES/CBC/NoPadding加密
         byte[] aesKey = Base64.decodeBase64("c72XCVbpLUUqB3sRNR2KQwxtqnbqi2bkidGtN9Zi5jP" + "=");
-        String passwordEnc = aes.encrypt(aesKey,rstData);
+        String passwordEnc = aes.encrypt(aesKey, rstData);
         // 解密
-        String passwordDec = aes.decrypt(aesKey,passwordEnc);
+        String passwordDec = aes.decrypt(aesKey, passwordEnc);
         System.out.println("加密之后的字符串:" + passwordEnc);
         System.out.println("解密后的数据:" + passwordDec);
 
-        System.out.println(aes.decrypt(aesKey,"PYKLv6YVQcpQZhO3PVY198BCEB35CvosbOvRYfQQXbZzaoCVk1RWzCwuW9gLfWexbryoC5ftblmmsFBj1gMITw=="));
+        System.out.println(
+                aes.decrypt(
+                        aesKey,
+                        "PYKLv6YVQcpQZhO3PVY198BCEB35CvosbOvRYfQQXbZzaoCVk1RWzCwuW9gLfWexbryoC5ftblmmsFBj1gMITw=="));
     }
 
     public String encrypt(byte[] aesKeys, String data) throws Exception {
@@ -56,7 +57,7 @@ public class PKCS7PaddingEncryptor {
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
             byte[] encrypted = cipher.doFinal(plaintext);
             // 将cipher加密后的byte数组用base64加密生成字符串
-            String EncStr = (new BASE64Encoder()).encode(encrypted);
+            String EncStr = Base64.encodeBase64String(encrypted);
             return EncStr;
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +67,7 @@ public class PKCS7PaddingEncryptor {
 
     public String decrypt(byte[] aesKeys, String encryptedData) throws Exception {
         try {
-            byte[] encrypted = (new BASE64Decoder()).decodeBuffer(encryptedData);
+            byte[] encrypted = Base64.decodeBase64(encryptedData);
             Cipher cipher = Cipher.getInstance(ALGO_MODE);
             SecretKeySpec keyspec = new SecretKeySpec(aesKeys, ALGO);
             IvParameterSpec ivspec = new IvParameterSpec(aesKeys, 0, 16);

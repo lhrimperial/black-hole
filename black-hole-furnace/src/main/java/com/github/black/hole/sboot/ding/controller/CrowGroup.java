@@ -23,10 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -89,8 +86,9 @@ public class CrowGroup extends AbstractCrowd {
                 });
 
         byte[] bytes = generate(exports);
-        OutputStream stream = new FileOutputStream("/Users/longhairen/Desktop/data112222.xlsx");
-        stream.write(bytes);
+        //        OutputStream stream = new
+        // FileOutputStream("/Users/longhairen/Desktop/data112222.xlsx");
+        //        stream.write(bytes);
 
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/media/upload");
         OapiMediaUploadRequest request = new OapiMediaUploadRequest();

@@ -8,16 +8,14 @@ import java.util.Arrays;
  */
 public class HeapSort {
 
+    /** 堆是一个完全二叉树；堆中每一个节点的值都必须大于等于（或小于等于）其子树中每个节点的值。 */
     public static void main(String[] args) {
         int[] arr = {49, 38, 65, 97, 23, 22, 76, 1, 5, 8, 2, 0, -1, 22};
         heapSort(arr);
         System.out.println("排序后:" + Arrays.toString(arr));
-
     }
 
-    /**
-     * 堆排序
-     */
+    /** 堆排序 */
     private static void heapSort(int[] arr) {
         // 1、建堆
         buildHeap(arr);
@@ -49,8 +47,8 @@ public class HeapSort {
      * 堆化
      *
      * @param arr 要堆化的数组
-     * @param n   最后堆元素下标
-     * @param i   要堆化的元素下标
+     * @param n 最后堆元素下标
+     * @param i 要堆化的元素下标
      */
     private static void heaping(int[] arr, int n, int i) {
         while (true) {
@@ -74,7 +72,6 @@ public class HeapSort {
             i = maxPos;
         }
     }
-
 
     private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
