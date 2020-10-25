@@ -1,6 +1,7 @@
 package com.github.black.hole.sboot.ding;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -53,5 +54,13 @@ public class DingAppConfiguration {
                 .token(token)
                 .aesKey(aesKey)
                 .build();
+    }
+
+    @Bean
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public ServletRegistrationBean callBackServlet() {
+        ServletRegistrationBean servletRegistrationBean =
+                new ServletRegistrationBean(new CallBackServlet(), "/call/servlet");
+        return servletRegistrationBean;
     }
 }

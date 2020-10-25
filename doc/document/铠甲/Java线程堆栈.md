@@ -81,7 +81,7 @@ public class ThreadStack {
 
 另外，从main线程的堆栈中，有-locked<0x0000000740006a70>(a java.lang.Object) 语句，这表示该线程已经占用了锁，其中0x0000000740006a70表示锁ID，这个锁ID是系统自动生成的，我们只需要知道每次打印堆栈，同一个ID表示是同一个锁即可.
 
-![Java线程-线程堆栈信息](/Users/longhairen/Documents/geek_time/线程/Java线程-线程堆栈信息.svg)
+![Java线程-线程堆栈信息](Java线程堆栈.assets/Java线程-线程堆栈信息-3501903.svg)
 
 其中"系统线程Id号"所指的本地线程是指该java虚拟机所对应的虚拟机中的本地线程，我们知道java是解析型语言，执行的实体是java虚拟机，因此java代码是依附于java虚拟机的本地线程执行的，当启动一个线程时，是创建一个native本地线程，本地线程才是真实的线程实体，为了更加深入理解本地线程和java线程的关系，试用`pstack<java pid>` 获得java虚拟机本地线程的堆栈.
 

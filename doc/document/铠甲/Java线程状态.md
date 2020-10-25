@@ -40,7 +40,7 @@ waiiting 是说线程自己调用 wait () 等函数，主动卡住自己，请 J
 
 ##### 线程的生命周期
 
-![Java线程](/Users/longhairen/Documents/geek_time/线程/Java线程.svg)
+![Java线程](Java线程状态.assets/Java线程.svg)
 
 >几种让出CPU时间的方法
 >
