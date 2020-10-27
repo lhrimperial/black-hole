@@ -97,6 +97,81 @@ public class ThreadStack {
 
 在线程堆栈中与锁相关的三个最重要的特征字：locked,waiting to lock（parking to wait for）,waiting on 了解这些特征字，当一个或一些线程正在等待一个锁的时候，应该有一个线程占用了这个锁，即如果有一个线程正在等待一个锁，该锁必然被另一个线程占用，从线程堆栈中看，如果看到waiting to lock<0x22bffb60>,应该也应该有locked<0x22bffb60>,大多数情况下确实如此，但是有些情况下，会发现线程堆栈中可能根本没有locked<0x22bffb60>,而只有waiting to lock，这是什么原因呢，实际上，在一个线程释放锁和另一个线程被唤醒之间有一个时间窗，如果这个期间，恰好打印堆栈信息，那么只会找到waiting to ，但是找不到locked 该锁的线程，当然不同的JAVA虚拟机有不同的实现策略，不一定会立刻响应请求，也许会等待正在执行的线程执行完成。
 
+```java
+public class ThreadLockStack {
+
+    private static Object lock = new Object();
+
+    public static void main(String[] args) throws Exception {
+        new Thread(
+                        () -> {
+                            synchronized (lock) {
+                                try {
+                                    lock.wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        "线程1")
+                .start();
+
+        new Thread(
+                        () -> {
+                            synchronized (lock) {
+                                try {
+                                    Thread.sleep(1000000L);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        "线程2")
+                .start();
+
+        new Thread(
+                        () -> {
+                            synchronized (lock) {
+                                System.out.println("hello");
+                            }
+                        },
+                        "线程3")
+                .start();
+    }
+}
+```
+
+堆栈信息
+
+```
+"线程3" #12 prio=5 os_prio=31 tid=0x00007fa4fe30c000 nid=0x4003 waiting for monitor entry [0x0000700009d56000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack.lambda$main$2(ThreadLockStack.java:41)
+	- waiting to lock <0x00000007959a1258> (a java.lang.Object)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack$$Lambda$3/1586600255.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+"线程2" #11 prio=5 os_prio=31 tid=0x00007fa4fe97b800 nid=0x3c03 waiting on condition [0x0000700009c53000]
+   java.lang.Thread.State: TIMED_WAITING (sleeping)
+	at java.lang.Thread.sleep(Native Method)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack.lambda$main$1(ThreadLockStack.java:29)
+	- locked <0x00000007959a1258> (a java.lang.Object)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack$$Lambda$2/1651191114.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+"线程1" #10 prio=5 os_prio=31 tid=0x00007fa4fe97a800 nid=0x3a03 in Object.wait() [0x0000700009b50000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000007959a1258> (a java.lang.Object)
+	at java.lang.Object.wait(Object.java:502)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack.lambda$main$0(ThreadLockStack.java:16)
+	- locked <0x00000007959a1258> (a java.lang.Object)
+	at com.github.black.hole.base.jdk.jvm.ThreadLockStack$$Lambda$1/515132998.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+```
+
 
 
 ##### CPU 100%定位
