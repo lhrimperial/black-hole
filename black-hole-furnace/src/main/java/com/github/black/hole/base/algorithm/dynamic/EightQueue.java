@@ -1,4 +1,4 @@
-package com.github.black.hole.base.algorithm;
+package com.github.black.hole.base.algorithm.dynamic;
 
 /**
  * @author hairen.long
@@ -9,14 +9,13 @@ public class EightQueue {
     /** 八皇后，回溯法 */
     public static void main(String[] args) {
         EightQueue queue = new EightQueue();
-        queue.cal8queens(1);
+        queue.cal8queens(0);
     }
 
     /** 全局或成员变量,下标表示行,值表示queen存储在哪一列 */
     int[] result = new int[8];
 
     public void cal8queens(int row) {
-        System.out.println("第几行：" + row);
         // 8个棋子都放置好了，打印结果
         if (row == 8) {
             printQueens(result);
