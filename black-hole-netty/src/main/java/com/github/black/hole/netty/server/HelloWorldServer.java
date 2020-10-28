@@ -1,6 +1,5 @@
 package com.github.black.hole.netty.server;
 
-import com.google.common.collect.Maps;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -81,7 +80,7 @@ public class HelloWorldServer {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             System.out.println("HelloWorldServerHandler active");
-            Map<String,String> map = new HashMap(); // Maps.newHashMap();
+            Map<String, String> map = new HashMap(); // Maps.newHashMap();
             map.put("1", "1");
         }
 
@@ -89,6 +88,7 @@ public class HelloWorldServer {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println("server channelRead..");
             System.out.println(ctx.channel().remoteAddress() + "->Server :" + msg.toString());
+            ctx.channel().writeAndFlush("server write" + msg);
             ctx.write("server write" + msg);
             ctx.flush();
 
@@ -101,7 +101,7 @@ public class HelloWorldServer {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             System.out.println("HelloWorldServerHandler active");
-            Map<String,String> map = new HashMap(); // Maps.newHashMap();
+            Map<String, String> map = new HashMap(); // Maps.newHashMap();
             map.put("1", "1");
         }
 
