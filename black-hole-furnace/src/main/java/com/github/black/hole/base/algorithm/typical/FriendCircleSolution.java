@@ -1,4 +1,4 @@
-package com.github.black.hole.base.algorithm.leetcode;
+package com.github.black.hole.base.algorithm.typical;
 
 import java.util.Arrays;
 import java.util.LinkedList;

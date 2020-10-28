@@ -1,4 +1,4 @@
-package com.github.black.hole.base.algorithm.leetcode;
+package com.github.black.hole.base.algorithm.typical;
 
 import com.github.black.hole.base.algorithm.tree.BinaryTree;
 import com.github.black.hole.base.algorithm.tree.TreeNode;
