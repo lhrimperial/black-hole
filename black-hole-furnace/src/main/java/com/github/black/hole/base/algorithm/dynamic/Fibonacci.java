@@ -1,5 +1,9 @@
 package com.github.black.hole.base.algorithm.dynamic;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * @author hairen.long
  * @date 2020/10/27
@@ -9,6 +13,7 @@ public class Fibonacci {
     public static void main(String[] args) {
         int result = fibWithMemo(6);
         System.out.println("result=" + result);
+        List<Integer> list = Lists.newArrayList();
     }
 
     /**
