@@ -1,5 +1,7 @@
 -- https://zhuanlan.zhihu.com/p/72223558
 -- https://ya2.top/articles/mysql%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%8F%98%E9%87%8F/
+-- 写的顺序：select … from… where…. group by… having… order by..
+-- 执行顺序：from… where…group by… having…. select … order by…
 
 /*
 sql 的执行顺序

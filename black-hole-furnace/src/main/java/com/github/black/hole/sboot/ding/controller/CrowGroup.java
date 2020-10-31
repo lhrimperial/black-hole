@@ -26,6 +26,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +36,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class CrowGroup extends AbstractCrowd {
+
+    private static Pattern PATTERN = Pattern.compile("(?<=\\()(.+?)(?=\\))");
 
     public void statisticsOwner() throws Exception {
         DingTalkClient client1 =
@@ -62,11 +66,15 @@ public class CrowGroup extends AbstractCrowd {
                         OapiDepartmentGetResponse response2 = client2.execute(request2, getToken());
                         String managers = response2.getDeptManagerUseridList();
                         String owner = response2.getOrgDeptOwner();
+                        String sourceId = response2.getSourceIdentifier();
+                        Matcher matcher = PATTERN.matcher(sourceId);
+                        String districtId = matcher.group();
                         if (Strings.isNullOrEmpty(managers)) {
                             exports.add(
                                     ExportDTO.builder()
                                             .deptId(deptId)
                                             .deptName(response2.getName())
+                                            .districtId(districtId)
                                             .managers("否")
                                             .owner("否")
                                             .build());
@@ -76,6 +84,7 @@ public class CrowGroup extends AbstractCrowd {
                                     ExportDTO.builder()
                                             .deptId(deptId)
                                             .deptName(response2.getName())
+                                            .districtId(districtId)
                                             .managers("是")
                                             .owner("否")
                                             .build());
@@ -123,7 +132,7 @@ public class CrowGroup extends AbstractCrowd {
         XSSFSheet sheet = workbook.createSheet("无主管或群主不是主管的商圈");
         XSSFRow header = sheet.createRow(0);
 
-        List<String> headers = Lists.newArrayList("部门ID", "部门名称", "是否有主管", "群主是否是主管");
+        List<String> headers = Lists.newArrayList("部门ID", "部门名称", "商圈ID", "是否有主管", "群主是否是主管");
         for (int i = 0, len = headers.size(); i < len; i++) {
             header.createCell(i).setCellValue(headers.get(i));
         }
@@ -132,8 +141,9 @@ public class CrowGroup extends AbstractCrowd {
             XSSFRow row = sheet.createRow(i + 1);
             row.createCell(0).setCellValue(data.getDeptId());
             row.createCell(1).setCellValue(data.getDeptName());
-            row.createCell(2).setCellValue(data.getManagers());
-            row.createCell(3).setCellValue(data.getOwner());
+            row.createCell(2).setCellValue(data.getDistrictId());
+            row.createCell(3).setCellValue(data.getManagers());
+            row.createCell(4).setCellValue(data.getOwner());
         }
         return generateByteArr(workbook);
     }
@@ -160,5 +170,6 @@ public class CrowGroup extends AbstractCrowd {
         private String deptName;
         private String managers;
         private String owner;
+        private String districtId;
     }
 }

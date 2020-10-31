@@ -3,6 +3,7 @@ package com.github.black.hole;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.black.hole.sboot.util.AesEncryptUtils;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,14 +15,14 @@ public class AppTest {
     public static void main(String[] args) throws Exception {
         String str =
                 "{\"encrypt\":\"0RkGpVv/mivrXXicKonYIDDY9LkgDU1ZPdkodslL/aRCjKK6lKrX+wshpKyOv1/tXrPBDF6TwSuIpN4/D4rNb/FRQk364R0XxouEZU5wzr1Tvh0gZH4zINh4luJIiEXS\"}";
-       JSONObject jobj = JSON.parseObject(str);
-       System.out.println(jobj);
+        JSONObject jobj = JSON.parseObject(str);
+        System.out.println(jobj);
 
         testAes();
-
     }
 
-    public static void testSubstring() {
+    @Test
+    public void testSubstring() {
         String str = "汇金路快送商圈(71258)";
         String s = str.substring(str.indexOf("(") + 1, str.indexOf(")"));
         System.out.println(s);
