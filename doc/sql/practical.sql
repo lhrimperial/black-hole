@@ -14,7 +14,7 @@ DISTINCT
 UNION
 ORDER BY
 */
-
+/*
 create table Student(sid varchar(10),sname varchar(10),sage datetime,ssex nvarchar(10));
 insert into Student values('01' , '赵雷' , '1990-01-01' , '男');
 insert into Student values('02' , '钱电' , '1990-12-21' , '男');
@@ -51,6 +51,7 @@ insert into SC values('06' , '01' , 31);
 insert into SC values('06' , '03' , 34);
 insert into SC values('07' , '02' , 89);
 insert into SC values('07' , '03' , 98);
+*/
 
 -- 查询"01"课程比"02"课程成绩高的学生的信息及课程分数
 select * from Student s right join (

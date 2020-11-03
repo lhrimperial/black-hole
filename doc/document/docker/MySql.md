@@ -27,3 +27,6 @@ docker run -d -p 3306:3306 --privileged=true -v /docker/mysql/conf/my.cnf:/etc/m
 # mysql -uroot -p 【数据库名】 < ***.sql
 ```
 
+Docker MySql中导入test_db
+
+test_db打包tar->拷贝到docker容器->容器中解压->登陆mysql->执行 source path/*.sql
