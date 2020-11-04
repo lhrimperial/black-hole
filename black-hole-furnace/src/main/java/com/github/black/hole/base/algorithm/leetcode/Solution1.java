@@ -26,6 +26,13 @@ public class Solution1 {
         System.out.println(Arrays.toString(resp));
     }
 
+    /**
+     * key是数组元素，value是下标
+     *
+     * @param num
+     * @param target
+     * @return
+     */
     public static int[] twoSumWay1(int[] num, int target) {
         Map<Integer, Integer> valueIndexMap = Maps.newHashMap();
         for (int i = 0, len = num.length; i < len; i++) {
