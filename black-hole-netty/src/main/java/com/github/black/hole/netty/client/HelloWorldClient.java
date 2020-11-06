@@ -13,6 +13,10 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author hairen.long
  * @date 2020/5/18
@@ -45,7 +49,6 @@ public class HelloWorldClient {
                                         }
                                     });
             ChannelFuture future = client.connect(host, port).sync();
-            future.channel().writeAndFlush("Hello Netty Server ,I am a netty client");
             future.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +61,27 @@ public class HelloWorldClient {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             System.out.println("HelloWorldClientHandler Active");
+            Executor executor = new ScheduledThreadPoolExecutor(1);
+            ((ScheduledThreadPoolExecutor) executor)
+                    .scheduleAtFixedRate(
+                            () -> {
+                                String message =
+                                        "In this chapter you general, we recommend Java Concurrency in Practice by Brian Goetz. His book w"
+                                                + "ill give We’ve reached an exciting point—in the next chapter we’ll discuss bootstrapping, the process "
+                                                + "of configuring and connecting all of Netty’s components to bring your learned about threading models in ge"
+                                                + "neral and Netty’s threading model in particular, whose performance and consistency advantages we discuss"
+                                                + "ed in detail In this chapter you general, we recommend Java Concurrency in Practice by Brian Goetz. Hi"
+                                                + "s book will give We’ve reached an exciting point—in the next chapter we’ll discuss bootstrapping, the"
+                                                + " process of configuring and connecting all of Netty’s components to bring your learned about threading "
+                                                + "models in general and Netty’s threading model in particular, whose performance and consistency advantag"
+                                                + "es we discussed in detailIn this chapter you general, we recommend Java Concurrency in Practice by Bri"
+                                                + "an Goetz. His book will give We’ve reached an exciting point—in the next chapter;the counter is: 1 2222"
+                                                + "sdsa ddasd asdsadas dsadasdas";
+                                ctx.channel().writeAndFlush(message);
+                            },
+                            5,
+                            60,
+                            TimeUnit.SECONDS);
         }
 
         @Override

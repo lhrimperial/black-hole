@@ -417,8 +417,9 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/update");
         OapiDepartmentUpdateRequest request = new OapiDepartmentUpdateRequest();
-        request.setId(102328160L);
-        request.setParentid("373777961");
+        request.setId(418438596L);
+        request.setName("临时部门10");
+        request.setSourceIdentifier("临时部门10");
         OapiDepartmentUpdateResponse response = client.execute(request, dto.getAccessToken());
         System.out.println(JSON.toJSONString(response));
     }
