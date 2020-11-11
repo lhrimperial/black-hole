@@ -18,10 +18,30 @@ public class Solution4 {
     public static void main(String[] args) {
         int[] num1 = {0, 1, 4, 5, 7, 8};
         int[] num2 = {2, 3, 6, 9};
-        double res = findMedianSortedArrays(num1, num2);
+        double res = findMedianSortArrays1(num1, num2);
         System.out.println(res);
 
         System.out.println(middle(num1));
+    }
+
+    public static double findMedianSortArrays1(int[] a, int[] b) {
+        int m = a.length;
+        int n = b.length;
+        int left = -1, right = -1;
+        int aStart = 0, bStart = 0;
+        for (int i = 0, len = (m + n) / 2; i <= len; i++) {
+            left = right;
+            if (aStart < m && (bStart >= n || a[aStart] < b[bStart])) {
+                right = a[aStart++];
+            } else {
+                right = b[bStart++];
+            }
+        }
+        if (((m + n) & 1) == 0) {
+            return (left + right) / 2D;
+        } else {
+            return right / 2D;
+        }
     }
 
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
