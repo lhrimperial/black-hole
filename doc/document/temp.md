@@ -38,3 +38,11 @@ https://www.jianshu.com/p/2554b0cd169b
 
 https://www.nowcoder.com/discuss/391651?type=2
 
+
+
+MQ
+
+https://juejin.im/post/6844904143685959693
+
+rabbitmq消息堆积问题 https://ddatsh.com/post/dev/mq/rabbitmq-block/
+

@@ -1,4 +1,4 @@
-package com.github.black.hole.message.producer.rabbitmq;
+package com.github.black.hole.message.producer.rabbitmq.ack;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

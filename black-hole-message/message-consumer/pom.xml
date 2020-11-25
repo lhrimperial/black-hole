@@ -12,5 +12,12 @@
     <artifactId>message-consumer</artifactId>
 
     <name>message-consumer</name>
-    
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.black.hole</groupId>
+            <artifactId>message-api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

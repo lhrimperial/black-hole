@@ -1,4 +1,4 @@
-package com.github.black.hole.message.producer.rabbitmq;
+package com.github.black.hole.message.producer.rabbitmq.ack;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -11,8 +11,8 @@ import java.util.concurrent.TimeoutException;
  * @author hairen.long
  * @date 2020/11/12
  */
-public class TransactionProducer {
-    private static final String QUEUE_NAME = "hello";
+public class NormalConfirmProducer {
+    private static final String EXCHANGE_NAME = "normal-confirm-exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         // 创建连接
@@ -26,18 +26,23 @@ public class TransactionProducer {
         Connection connection = factory.newConnection();
         // 创建一个通道
         Channel channel = connection.createChannel();
-        // 指定一个队列,不存在的话自动创建
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        // 创建一个Exchange
+        channel.exchangeDeclare(EXCHANGE_NAME, "direct");
 
-        channel.txSelect();
-
-        // 发送消息
-        String message = "Hello World!";
-        channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-
-        int res = 1/0;
-        channel.txCommit();
-        System.out.println(" [x] Sent '" + message + "'");
+        try {
+            channel.confirmSelect();
+            // 发送消息
+            String message = "normal confirm test";
+            channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
+            if (channel.waitForConfirms()) {
+                System.out.println("send message success");
+            } else {
+                System.out.println("send message failed");
+                // do something else...
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // 关闭频道和连接
         channel.close();

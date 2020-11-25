@@ -15,6 +15,7 @@
     <modules>
         <module>message-producer</module>
         <module>message-consumer</module>
+        <module>message-api</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -26,15 +27,38 @@
         <loombok.version>1.18.6</loombok.version>
         <netty-all.version>4.1.25.Final</netty-all.version>
         <logback.version>1.2.3</logback.version>
-        <rabbitmq.version>5.7.0</rabbitmq.version>
+        <rabbitmq-client.version>5.7.0</rabbitmq-client.version>
+        <rocket-client.version>4.0.0-incubating</rocket-client.version>
+
+        <meesage-api.version>1.0-SNAPSHOT</meesage-api.version>
     </properties>
 
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.black.hole</groupId>
+                <artifactId>message-api</artifactId>
+                <version>${meesage-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${rocket-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-common</artifactId>
+            <version>${rocket-client.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
-            <version>${rabbitmq.version}</version>
+            <version>${rabbitmq-client.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
