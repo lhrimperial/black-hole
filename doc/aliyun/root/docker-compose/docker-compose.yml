@@ -1,5 +1,7 @@
 version: '3'
 
+## hostPort:containerPort
+
 services:
   ###################redis###########################
   redis:
@@ -8,7 +10,7 @@ services:
     #项目名称
     container_name: myredis
     ports:
-      - 6379:6379
+      - 63799:6379
     command: redis-server /etc/redis/redis.conf
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -44,7 +46,7 @@ services:
        - "/data/mysql/conf/my.cnf:/etc/my.cnf"
        - "/data/mysql/init:/docker-entrypoint-initdb.d/"
     ports:
-        - "3306:3306"
+        - "33066:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "-uroot", "-p$MYSQL_ROOT_PASSWORD",  "ping", "-h", "localhost"]
       timeout: 5s

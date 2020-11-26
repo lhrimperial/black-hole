@@ -417,11 +417,12 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/update");
         OapiDepartmentUpdateRequest request = new OapiDepartmentUpdateRequest();
-        request.setId(102328160L);
-        request.setParentid("373777961");
+        request.setId(375819363L);
+        request.setDeptManagerUseridList("015948543229213071|04216211451049322");
+        request.setOrgDeptOwner("04216211451049322");
         OapiDepartmentUpdateResponse response = client.execute(request, dto.getAccessToken());
         System.out.println(JSON.toJSONString(response));
-    }
+}
 
     @Test
     public void getUser() throws Exception {
@@ -452,6 +453,19 @@ public class CrowdSyncTest {
         DingTalkClient client1 = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
         OapiUserGetRequest request1 = new OapiUserGetRequest();
         request1.setUserid(response.getUserid());
+        request1.setHttpMethod("GET");
+        OapiUserGetResponse response1 = client1.execute(request1, dto.getAccessToken());
+        logger.info(JSON.toJSONString(response1));
+    }
+
+    @Test
+    public void test11121() throws Exception {
+        AccessTokenDTO dto =
+                accessTokenHandler.getAccessToken(
+                        crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
+        DingTalkClient client1 = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
+        OapiUserGetRequest request1 = new OapiUserGetRequest();
+        request1.setUserid("035050052440349630");
         request1.setHttpMethod("GET");
         OapiUserGetResponse response1 = client1.execute(request1, dto.getAccessToken());
         logger.info(JSON.toJSONString(response1));
@@ -498,31 +512,32 @@ public class CrowdSyncTest {
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
         OapiDepartmentListRequest request = new OapiDepartmentListRequest();
-                request.setId("358518191");
+        request.setId("358518191");
         request.setHttpMethod("GET");
         OapiDepartmentListResponse response = client.execute(request, dto.getAccessToken());
         logger.info("allDepartment:{}", JSON.toJSONString(response.getDepartment()));
 
-//        Map<String, OapiDepartmentListResponse.Department> dingDeptMap =
-//                response.getDepartment().stream()
-//                        .filter(
-//                                dept ->
-//                                        !Strings.isNullOrEmpty(dept.getSourceIdentifier())
-//                                                && dept.getSourceIdentifier()
-//                                                        .contains("CROWD_DISTRICT"))
-//                        .collect(
-//                                Collectors.toConcurrentMap(
-//                                        OapiDepartmentListResponse.Department::getSourceIdentifier,
-//                                        Function.identity(),
-//                                        (v1, v2) -> v1));
-//        logger.info("allDepartment:{}", JSON.toJSONString(dingDeptMap));
-//
-//        for (OapiDepartmentListResponse.Department department : dingDeptMap.values()) {
-//            if (Objects.isNull(department.getParentid())) {
-//                System.out.println(department);
-//            }
-//        }
-//        System.out.println("deptMap");
+        //        Map<String, OapiDepartmentListResponse.Department> dingDeptMap =
+        //                response.getDepartment().stream()
+        //                        .filter(
+        //                                dept ->
+        //                                        !Strings.isNullOrEmpty(dept.getSourceIdentifier())
+        //                                                && dept.getSourceIdentifier()
+        //                                                        .contains("CROWD_DISTRICT"))
+        //                        .collect(
+        //                                Collectors.toConcurrentMap(
+        //
+        // OapiDepartmentListResponse.Department::getSourceIdentifier,
+        //                                        Function.identity(),
+        //                                        (v1, v2) -> v1));
+        //        logger.info("allDepartment:{}", JSON.toJSONString(dingDeptMap));
+        //
+        //        for (OapiDepartmentListResponse.Department department : dingDeptMap.values()) {
+        //            if (Objects.isNull(department.getParentid())) {
+        //                System.out.println(department);
+        //            }
+        //        }
+        //        System.out.println("deptMap");
     }
 
     @Test

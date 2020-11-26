@@ -38,6 +38,8 @@ import java.util.stream.Collectors;
 public class CrowGroup extends AbstractCrowd {
 
     private static Pattern PATTERN = Pattern.compile("(?<=\\()(.+?)(?=\\))");
+    private static final String YES = "是";
+    private static final String NO = "否";
 
     public void statisticsOwner() throws Exception {
         DingTalkClient client1 =
@@ -68,25 +70,24 @@ public class CrowGroup extends AbstractCrowd {
                         String owner = response2.getOrgDeptOwner();
                         String sourceId = response2.getSourceIdentifier();
                         Matcher matcher = PATTERN.matcher(sourceId);
-                        String districtId = matcher.group();
-                        if (Strings.isNullOrEmpty(managers)) {
-                            exports.add(
-                                    ExportDTO.builder()
-                                            .deptId(deptId)
-                                            .deptName(response2.getName())
-                                            .districtId(districtId)
-                                            .managers("否")
-                                            .owner("否")
-                                            .build());
+                        String districtId = null;
+                        while (matcher.find()) {
+                            districtId = matcher.group();
+                        }
 
-                        } else if (Strings.isNullOrEmpty(owner) || !managers.contains(owner)) {
+                        boolean hasManager = !Strings.isNullOrEmpty(managers);
+                        boolean ownerIsManager =
+                                hasManager
+                                        && !Strings.isNullOrEmpty(owner)
+                                        && managers.contains(owner);
+                        if (!hasManager || !ownerIsManager) {
                             exports.add(
                                     ExportDTO.builder()
                                             .deptId(deptId)
                                             .deptName(response2.getName())
                                             .districtId(districtId)
-                                            .managers("是")
-                                            .owner("否")
+                                            .managers(hasManager ? YES : NO)
+                                            .owner(ownerIsManager ? YES : NO)
                                             .build());
                         }
                     } catch (Exception e) {

@@ -59,8 +59,7 @@ public class HelloWorldServer {
                                             ch.pipeline()
                                                     .addLast("decoder", new StringDecoder())
                                                     .addLast("encoder", new StringEncoder())
-                                                    .addLast(new HelloWorldServerHandler())
-                                                    .addLast(new HelloWorldServerHandler1());
+                                                    .addLast(new HelloWorldServerHandler());
                                         }
                                     });
             // 绑定端口
@@ -88,9 +87,6 @@ public class HelloWorldServer {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println("server channelRead..");
             System.out.println(ctx.channel().remoteAddress() + "->Server :" + msg.toString());
-            ctx.channel().writeAndFlush("server write" + msg);
-            ctx.write("server write" + msg);
-            ctx.flush();
 
             ctx.fireChannelRead(msg);
         }

@@ -12,7 +12,7 @@ services:
     depends_on:
       - zk
     ports:
-      - 8080:8080
+      - 8088:8080
     environment:
       - admin.registry.address=zookeeper://zk:2181
       - admin.config-center=zookeeper://zk:2181

@@ -12,7 +12,7 @@
         <module>black-hole-gateway</module>
         <module>black-hole-furnace</module>
         <module>black-hole-dubbo</module>
-        <module>black-hole-dubbo/dubbo-source</module>
+        <module>black-hole-message</module>
     </modules>
     <packaging>pom</packaging>
 
