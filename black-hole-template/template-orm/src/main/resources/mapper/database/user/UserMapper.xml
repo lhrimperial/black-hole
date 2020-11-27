@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.black.hole.template.orm.database.user.dao.UserMapper">
+
+    <sql id="all_columns">
+        id,name
+    </sql>
+
+    <select id="findById" resultType="com.github.black.hole.template.orm.database.user.entity.UserDO">
+        select
+        <include refid="all_columns"/>
+        from t_user
+        where id = #{id}
+    </select>
+</mapper>

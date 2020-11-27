@@ -13,6 +13,7 @@
         <module>black-hole-furnace</module>
         <module>black-hole-dubbo</module>
         <module>black-hole-message</module>
+        <module>black-hole-template</module>
     </modules>
     <packaging>pom</packaging>
 

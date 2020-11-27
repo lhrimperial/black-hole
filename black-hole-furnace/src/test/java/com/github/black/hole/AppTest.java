@@ -7,18 +7,18 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /** Unit test for simple App. */
 public class AppTest {
     public static void main(String[] args) throws Exception {
-        String str =
-                "{\"encrypt\":\"0RkGpVv/mivrXXicKonYIDDY9LkgDU1ZPdkodslL/aRCjKK6lKrX+wshpKyOv1/tXrPBDF6TwSuIpN4/D4rNb/FRQk364R0XxouEZU5wzr1Tvh0gZH4zINh4luJIiEXS\"}";
-        JSONObject jobj = JSON.parseObject(str);
-        System.out.println(jobj);
-
-        testAes();
+        List<Long> teamIds = Collections.emptyList();
+        teamIds.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Test
