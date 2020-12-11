@@ -1,4 +1,4 @@
-package com.github.black.hole.template.api.user.dto;
+package com.github.black.hole.template.integration.app1;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author hairen.long
- * @date 2020/11/27
+ * @date 2020/12/8
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    /** 用户ID */
-    private Long userId;
-    /** 用户姓名 */
-    private String userName;
+public class InternalPersonDTO {
+    /** id */
+    private Long personId;
+    /** name */
+    private String personName;
 }

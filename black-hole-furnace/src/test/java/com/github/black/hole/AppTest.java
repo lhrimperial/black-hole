@@ -1,25 +1,16 @@
 package com.github.black.hole;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.black.hole.sboot.util.AesEncryptUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /** Unit test for simple App. */
 public class AppTest {
-    public static void main(String[] args) throws Exception {
-        List<Long> teamIds = Collections.emptyList();
-        teamIds.stream().filter(Objects::nonNull).collect(Collectors.toList());
-    }
+    public static void main(String[] args) throws Exception {}
 
     @Test
     public void testSubstring() {

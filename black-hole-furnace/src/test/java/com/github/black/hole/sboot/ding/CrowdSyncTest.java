@@ -1,4 +1,4 @@
-package com.github.black.hole.ding;
+package com.github.black.hole.sboot.ding;
 
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -34,9 +34,6 @@ import com.dingtalk.api.response.OapiUserGetDeptMemberResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
 import com.github.black.hole.sboot.SbootMain;
-import com.github.black.hole.sboot.ding.AccessTokenDTO;
-import com.github.black.hole.sboot.ding.AccessTokenHandler;
-import com.github.black.hole.sboot.ding.DingAppConfig;
 import com.github.black.hole.sboot.ding.controller.CrowGroup;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

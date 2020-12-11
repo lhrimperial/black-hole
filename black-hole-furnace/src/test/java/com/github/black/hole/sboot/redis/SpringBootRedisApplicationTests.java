@@ -1,4 +1,4 @@
-package com.github.black.hole.redis;
+package com.github.black.hole.sboot.redis;
 
 import com.github.black.hole.sboot.SbootMain;
 import org.junit.Test;

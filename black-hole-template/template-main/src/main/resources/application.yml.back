@@ -35,3 +35,16 @@ mybatis:
   config:
     path: mybatis-settings.xml
   mapper-locations: classpath*:mapper/**/*.xml
+# dubbo
+dubbo:
+  regitstry:
+    address: zookeeper://ifarmshop.com:2181
+  application:
+    name: ${spring.application.name}
+  protocol:
+    name: dubbo
+    port: 20880
+  scan:
+    base-packages: com.github.black.hole.template.integration
+  provider:
+    timeout: 10000

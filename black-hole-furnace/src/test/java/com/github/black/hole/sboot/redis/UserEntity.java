@@ -1,4 +1,4 @@
-package com.github.black.hole.redis;
+package com.github.black.hole.sboot.redis;
 
 import lombok.Data;
 

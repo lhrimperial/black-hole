@@ -1,7 +1,7 @@
 package com.github.black.hole.template.application.service;
 
-import com.github.black.hole.template.api.user.dto.UserDTO;
-import com.github.black.hole.template.api.user.service.UserService;
+import com.github.black.hole.template.api.user.dto.BusinessDTO;
+import com.github.black.hole.template.api.user.service.TemplateBusinessService;
 import com.github.black.hole.template.orm.database.user.dao.UserMapper;
 import com.github.black.hole.template.orm.database.user.entity.UserDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,16 @@ import java.util.Objects;
  * @date 2020/11/27
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements TemplateBusinessService {
 
     @Autowired UserMapper userMapper;
 
     @Override
-    public UserDTO findUserById(Long userId) {
+    public BusinessDTO findUserById(Long userId) {
         UserDO userDO = userMapper.findById(userId);
         if (Objects.isNull(userDO)) {
             return null;
         }
-        return UserDTO.builder().userId(userDO.getId()).userName(userDO.getName()).build();
+        return BusinessDTO.builder().userId(userDO.getId()).userName(userDO.getName()).build();
     }
 }

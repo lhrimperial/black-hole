@@ -1,4 +1,4 @@
-package com.github.black.hole.excel;
+package com.github.black.hole.sboot.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.AllArgsConstructor;
