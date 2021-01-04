@@ -429,9 +429,10 @@ public class CrowdSyncTest {
                         crowdOrgConfig.getAppKey(), crowdOrgConfig.getAppSecret());
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
         OapiUserGetRequest request = new OapiUserGetRequest();
-        request.setUserid("KNIGHT.1.123940649");
+        request.setUserid("KNIGHT.1.3448212");
         request.setHttpMethod("GET");
         OapiUserGetResponse response = client.execute(request, dto.getAccessToken());
+        System.out.println(response);
     }
 
     @Test
