@@ -2,6 +2,18 @@ Java 栈
 
 https://www.pdai.tech/
 
+https://osjobs.net/topk/
+
+https://osjobs.net/
+
+https://doctording.github.io/sword_at_offer/
+
+
+
+GC
+
+https://tech.meituan.com/2017/12/29/jvm-optimize.html
+
 
 
 树

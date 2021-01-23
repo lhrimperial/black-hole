@@ -20,7 +20,7 @@ public class StreamTest {
     public static void main(String[] args) {
         String sourceIdentify = "CROWD_LAYERED_GROUP_11799027";
         if (Strings.isNullOrEmpty(sourceIdentify)) {
-            return ;
+            return;
         }
         int index = sourceIdentify.lastIndexOf("_");
         String idStr = sourceIdentify.substring(index + 1);
@@ -30,10 +30,10 @@ public class StreamTest {
         System.out.println(Long.valueOf(idStr));
 
         Boolean a = null;
-        int b = a?1:0;
+        int b = a ? 1 : 0;
     }
 
-    public void test(){
+    public void test() {
         String expression = "((y2-y1)/(x2-x1))*(x3-x2)+y2";
         Map<String, BigDecimal> data = Maps.newHashMap();
         data.put("y2", BigDecimal.valueOf(100));

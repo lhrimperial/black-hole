@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,13 +31,30 @@ public class CollectionFunctionUtil {
      * @param <R>
      * @return
      */
-    public static <T, R> List<R> getValues(Collection<T> collection, Function<T, R> function) {
+    public static <T, R> List<R> getList(Collection<T> collection, Function<T, R> function) {
         return Optional.ofNullable(collection).orElse(Collections.emptyList()).stream()
                 .filter(Objects::nonNull)
                 .map(function)
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 集合中取值
+     *
+     * @param collection
+     * @param function
+     * @param <T>
+     * @param <R>
+     * @return
+     */
+    public static <T, R> Set<R> getSet(Collection<T> collection, Function<T, R> function) {
+        return Optional.ofNullable(collection).orElse(Collections.emptyList()).stream()
+                .filter(Objects::nonNull)
+                .map(function)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -57,6 +75,28 @@ public class CollectionFunctionUtil {
                 .filter(item -> Objects.nonNull(keyFun.apply(item)))
                 .filter(item -> Objects.nonNull(valueFun.apply(item)))
                 .collect(Collectors.toMap(keyFun, valueFun, (v1, v2) -> v1));
+    }
+
+    /**
+     * 集合中取map
+     *
+     * @param collection
+     * @param keyFun
+     * @param valueFun
+     * @param <T>
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public static <T, K, V> Map<K, List<V>> grouping(
+            Collection<T> collection, Function<T, K> keyFun, Function<T, V> valueFun) {
+        return Optional.ofNullable(collection).orElse(Collections.emptyList()).stream()
+                .filter(Objects::nonNull)
+                .filter(item -> Objects.nonNull(keyFun.apply(item)))
+                .filter(item -> Objects.nonNull(valueFun.apply(item)))
+                .collect(
+                        Collectors.groupingBy(
+                                keyFun, Collectors.mapping(valueFun, Collectors.toList())));
     }
 
     /**

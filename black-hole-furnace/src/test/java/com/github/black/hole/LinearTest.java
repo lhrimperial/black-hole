@@ -3,10 +3,13 @@ package com.github.black.hole;
 import com.github.black.hole.sboot.linear.CoordinatePoint;
 import com.github.black.hole.sboot.linear.LinearCalcUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,7 +21,18 @@ import java.util.stream.IntStream;
 public class LinearTest {
 
     public static void main(String[] args) {
-        test();
+        test11();
+    }
+
+    public static void test11(){
+        String express = "id235+id99-id107-id123";
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("id235", new BigDecimal(4.3));
+        map.put("id99", new BigDecimal(5));
+        map.put("id107", new BigDecimal(0));
+        map.put("id123", new BigDecimal(0));
+        BigDecimal value = LinearCalcUtil.calcExpression(express, map);
+        System.out.println(value);
     }
 
     public static void test(){

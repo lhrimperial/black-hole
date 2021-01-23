@@ -14,6 +14,7 @@
         <module>black-hole-dubbo</module>
         <module>black-hole-message</module>
         <module>black-hole-template</module>
+        <module>black-hole-algorithm</module>
     </modules>
     <packaging>pom</packaging>
 
