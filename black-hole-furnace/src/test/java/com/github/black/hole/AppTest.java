@@ -1,16 +1,22 @@
 package com.github.black.hole;
 
+import com.alibaba.fastjson.JSON;
 import com.github.black.hole.sboot.util.AesEncryptUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Unit test for simple App. */
 public class AppTest {
-    public static void main(String[] args) throws Exception {}
+    public static void main(String[] args) throws Exception {
+        String str = "[323,355]";
+        List<Long> list = JSON.parseArray(str, Long.class);
+        System.out.println(list.toString());
+    }
 
     @Test
     public void testSubstring() {

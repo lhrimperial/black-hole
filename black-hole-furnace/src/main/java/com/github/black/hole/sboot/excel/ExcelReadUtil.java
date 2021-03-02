@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigDecimal;
@@ -68,7 +69,10 @@ public class ExcelReadUtil {
                 fieldValue.put(fields[cInx].getName(), getValue(row.getCell(cInx)));
             }
 
-            T instance = clazz.newInstance();
+            @SuppressWarnings("unchecked")
+            Constructor<T> con =  clazz.getConstructor();
+            @SuppressWarnings("unchecked")
+            T instance = con.newInstance();
             Arrays.stream(fields)
                     .forEach(
                             (field) -> {

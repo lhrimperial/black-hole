@@ -26,6 +26,12 @@ mysql
 
 https://www.jianshu.com/p/24e1179ef563
 
+mysql索引
+
+https://blog.codinglabs.org/articles/theory-of-mysql-index.html
+
+https://tech.meituan.com/2014/06/30/mysql-index.html
+
 
 
 字节

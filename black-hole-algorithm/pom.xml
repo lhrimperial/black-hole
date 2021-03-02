@@ -7,8 +7,31 @@
     <groupId>com.github.black.hole</groupId>
     <artifactId>black-hole-algorithm</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <name>black-hole-algorithm</name>
 
 
+    <properties>
+        <jol-core.version>0.14</jol-core.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>${jol-core.version}</version>
+        </dependency>
+    </dependencies>
 </project>

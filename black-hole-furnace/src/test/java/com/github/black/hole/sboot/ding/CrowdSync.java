@@ -11,6 +11,7 @@ import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
 import com.dingtalk.api.request.OapiUserGetDeptMemberRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
 import com.dingtalk.api.request.OapiUserListbypageRequest;
+import com.dingtalk.api.request.OapiUserUpdateRequest;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
 import com.dingtalk.api.response.OapiDepartmentUpdateResponse;
@@ -19,6 +20,7 @@ import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
 import com.dingtalk.api.response.OapiUserGetDeptMemberResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
+import com.dingtalk.api.response.OapiUserUpdateResponse;
 import com.github.black.hole.sboot.SbootMain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -54,12 +56,12 @@ public class CrowdSync {
     @Autowired AccessTokenHandler accessTokenHandler;
 
     public static String getToken() throws Exception {
-        String appKey = "dinguenpya4moj9yzuju";
-        String appSecret = "oPlzb-72XCVbpLUUqB3sRNR2KQwxtqnbqi2bki_dGtN9Zi5jPWfy6qqtOyKZM2de";
+        //        String appKey = "dinguenpya4moj9yzuju";
+        //        String appSecret =
+        // "oPlzb-72XCVbpLUUqB3sRNR2KQwxtqnbqi2bki_dGtN9Zi5jPWfy6qqtOyKZM2de";
         // 测试
-        //                String appKey = "ding2qurqklmvjg5pxlm";
-        //                String appSecret =
-        //         "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr";
+        String appKey = "ding2qurqklmvjg5pxlm";
+        String appSecret = "_PWdtl6GrmClZFu-Vn9nP7a9P1ri269BmEGHbMbxbKqyAM4rFXBczU1voinktphr";
         DefaultDingTalkClient client = new DefaultDingTalkClient(DingUrlConstants.GET_TOKEN);
         OapiGettokenRequest request = new OapiGettokenRequest();
         request.setAppkey(appKey);
@@ -145,10 +147,20 @@ public class CrowdSync {
     }
 
     @Test
+    public void updateUser() throws Exception {
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/update");
+        OapiUserUpdateRequest req = new OapiUserUpdateRequest();
+        req.setUserid("046701565626198105");
+        req.setExtattr("{\"骑士ID\":132105995953}");
+        OapiUserUpdateResponse rsp = client.execute(req, getToken());
+        System.out.println(rsp.getBody());
+    }
+
+    @Test
     public void test111() throws Exception {
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
         OapiUserGetRequest request = new OapiUserGetRequest();
-        request.setUserid("296857116924009326");
+        request.setUserid("29475318131561622136");
         request.setHttpMethod("GET");
         OapiUserGetResponse response = client.execute(request, getToken());
         String ext = response.getExtattr();
@@ -239,40 +251,48 @@ public class CrowdSync {
         OapiDepartmentListResponse response = client.execute(request, dto.getAccessToken());
         logger.info("allDepartment:{}", JSON.toJSONString(response.getDepartment()));
 
-//        List<OapiDepartmentListResponse.Department> centerGroup = Lists.newArrayList();
-//        List<OapiDepartmentListResponse.Department> knightGroup = Lists.newArrayList();
-//        List<OapiDepartmentListResponse.Department> temporaryGroup = Lists.newArrayList();
-//        List<OapiDepartmentListResponse.Department> regionLogisticsGroup = Lists.newArrayList();
-//
-//        RateLimiter limiter = RateLimiter.create(100);
-//        response.getDepartment().stream()
-//                .filter(Objects::nonNull)
-//                .filter(item -> !Strings.isNullOrEmpty(item.getSourceIdentifier()))
-//                .forEach(
-//                        item -> {
-//                            String sourceId = null;
-//                            if (item.getSourceIdentifier().contains("centerGroup")) {
-//                                centerGroup.add(item);
-//                                sourceId = item.getSourceIdentifier().replace("centerGroup", "CENTER_GROUP");
-//                            } else if (item.getSourceIdentifier().contains("knightGroup")) {
-//                                knightGroup.add(item);
-//                                sourceId = item.getSourceIdentifier().replace("knightGroup", "KNIGHT_GROUP");
-//                            } else if (item.getSourceIdentifier().contains("TEMPORARY_GROUP")) {
-//                                temporaryGroup.add(item);
-//                                sourceId = item.getSourceIdentifier().replace("temporaryGroup", "TEMPORARY_GROUP");
-//                            } else if (item.getSourceIdentifier()
-//                                    .contains("regionLogisticsGroup")) {
-//                                regionLogisticsGroup.add(item);
-//                                sourceId = item.getSourceIdentifier().replace("regionLogisticsGroup", "REGION_LOGISTICS_GROUP");
-//                            } else if (item.getSourceIdentifier().contains("CUSTOMER_SERVICE")) {
-//                                System.out.println(JSON.toJSONString(item));
-//                            }
-//                            if (!Strings.isNullOrEmpty(sourceId)) {
-//                                limiter.acquire();
-//                                update(item.getId(), sourceId);
-//                            }
-//                        });
-//        System.out.println();
+        //        List<OapiDepartmentListResponse.Department> centerGroup = Lists.newArrayList();
+        //        List<OapiDepartmentListResponse.Department> knightGroup = Lists.newArrayList();
+        //        List<OapiDepartmentListResponse.Department> temporaryGroup = Lists.newArrayList();
+        //        List<OapiDepartmentListResponse.Department> regionLogisticsGroup =
+        // Lists.newArrayList();
+        //
+        //        RateLimiter limiter = RateLimiter.create(100);
+        //        response.getDepartment().stream()
+        //                .filter(Objects::nonNull)
+        //                .filter(item -> !Strings.isNullOrEmpty(item.getSourceIdentifier()))
+        //                .forEach(
+        //                        item -> {
+        //                            String sourceId = null;
+        //                            if (item.getSourceIdentifier().contains("centerGroup")) {
+        //                                centerGroup.add(item);
+        //                                sourceId =
+        // item.getSourceIdentifier().replace("centerGroup", "CENTER_GROUP");
+        //                            } else if (item.getSourceIdentifier().contains("knightGroup"))
+        // {
+        //                                knightGroup.add(item);
+        //                                sourceId =
+        // item.getSourceIdentifier().replace("knightGroup", "KNIGHT_GROUP");
+        //                            } else if
+        // (item.getSourceIdentifier().contains("TEMPORARY_GROUP")) {
+        //                                temporaryGroup.add(item);
+        //                                sourceId =
+        // item.getSourceIdentifier().replace("temporaryGroup", "TEMPORARY_GROUP");
+        //                            } else if (item.getSourceIdentifier()
+        //                                    .contains("regionLogisticsGroup")) {
+        //                                regionLogisticsGroup.add(item);
+        //                                sourceId =
+        // item.getSourceIdentifier().replace("regionLogisticsGroup", "REGION_LOGISTICS_GROUP");
+        //                            } else if
+        // (item.getSourceIdentifier().contains("CUSTOMER_SERVICE")) {
+        //                                System.out.println(JSON.toJSONString(item));
+        //                            }
+        //                            if (!Strings.isNullOrEmpty(sourceId)) {
+        //                                limiter.acquire();
+        //                                update(item.getId(), sourceId);
+        //                            }
+        //                        });
+        //        System.out.println();
     }
 
     public void update(Long id, String sourceId) {
