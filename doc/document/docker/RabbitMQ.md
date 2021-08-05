@@ -9,3 +9,8 @@ docker run -d --hostname my-rabbit --name rabbit -e RABBITMQ_DEFAULT_USER=admin 
 https://michael728.github.io/2019/06/07/docker-rabbitmq-env/
 
 https://linbei.top/Docker%E6%90%AD%E5%BB%BARabbitMq%E9%9B%86%E7%BE%A4%E5%8F%8AHaProxy%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/
+
+https://zhuanlan.zhihu.com/p/63700605
+
+https://toutiao.io/posts/b9dlbi/preview
+

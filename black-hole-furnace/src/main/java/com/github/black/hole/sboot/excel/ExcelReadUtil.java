@@ -52,7 +52,7 @@ public class ExcelReadUtil {
         return readObjectFromWorkBook(workbook, sheetId, clazz);
     }
 
-    private static <T> List<T> readObjectFromWorkBook(
+    public static <T> List<T> readObjectFromWorkBook(
             Workbook workbook, int sheetId, Class<T> clazz) throws Exception {
         List<T> resultList = Lists.newArrayList();
         Field[] fields = clazz.getDeclaredFields();

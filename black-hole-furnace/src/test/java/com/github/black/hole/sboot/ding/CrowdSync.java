@@ -25,6 +25,7 @@ import com.github.black.hole.sboot.SbootMain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.RateLimiter;
+import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.util.Strings;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -99,7 +100,8 @@ public class CrowdSync {
     }
 
     public static void main(String[] args) throws Exception {
-        getDeptUserId();
+        String str = Base64.encodeBase64String("HUMMINGBIRD_COLLEGE".getBytes());
+        System.out.println(str);
     }
 
     public static void getDeptUserId() throws Exception {
