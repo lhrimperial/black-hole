@@ -15,6 +15,7 @@
         <module>black-hole-message</module>
         <module>black-hole-template</module>
         <module>black-hole-algorithm</module>
+        <module>black-hole-mybatis</module>
     </modules>
     <packaging>pom</packaging>
 
