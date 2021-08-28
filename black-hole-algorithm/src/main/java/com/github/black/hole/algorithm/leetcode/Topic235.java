@@ -18,12 +18,12 @@ public class Topic235 {
      * <p>输出: 6 解释: 节点 2 和节点 8 的最近公共祖先是 6。
      */
     public static void main(String[] args) {
-        int[] arr = {2,3};
+        int[] arr = {2, 3};
         TreeNode node = TreeNode.buildTree(arr);
         List<Integer> levelOrder = new ArrayList<>();
         TreeNode.levelOrder(node, levelOrder);
         System.out.println("层次遍历:" + levelOrder);
-        TreeNode result = lowestCommonAncestor2(node, new TreeNode(3), new TreeNode(2));
+        TreeNode result = lowestCommonAncestor(node, new TreeNode(3), new TreeNode(2));
         System.out.println(result.getValue());
     }
 

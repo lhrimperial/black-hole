@@ -1,6 +1,6 @@
 #### Linux 基础
 
-#####一 常用命令说明
+##### 一 常用命令说明
 
 ```shell
 nohup command >out.file 2>&1 &

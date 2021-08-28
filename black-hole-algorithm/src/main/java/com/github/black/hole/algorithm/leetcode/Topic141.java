@@ -15,11 +15,11 @@ public class Topic141 {
         int[] arr1 = IntStream.rangeClosed(0, 6).toArray();
         ListNode node1 = ListNode.buildList(arr1);
         ListNode.print(node1);
-        System.out.println("node is cycle " + hasCycle3(node1));
+        System.out.println("node is cycle " + hasCycle2(node1));
         int[] arr2 = new int[] {1, 2, 3, 4, 5, 6, 7};
         ListNode node2 = ListNode.buildCycleList(arr2, 3);
         ListNode.printCycle(node2);
-        System.out.println("node is cycle " + hasCycle3(node2));
+        System.out.println("node is cycle " + hasCycle2(node2));
     }
 
     public static boolean hasCycle3(ListNode head){

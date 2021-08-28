@@ -28,11 +28,11 @@ public class Topic77 {
         }
         List<List<Integer>> result = new ArrayList<>();
         Deque<Integer> path = new ArrayDeque<>();
-        dfs(n, k, 1, path, result);
+        dfsCombine(n, k, 1, path, result);
         return result;
     }
 
-    public static void dfs(
+    public static void dfsCombine(
             int n, int k, int begin, Deque<Integer> path, List<List<Integer>> result) {
         if (path.size() == k) {
             result.add(new ArrayList<>(path));
@@ -40,9 +40,10 @@ public class Topic77 {
         }
         int upper = n - (k - path.size()) + 1;
         for (int i = begin; i <= upper; i++) {
-            path.addLast(i);
-            dfs(n, k, i + 1, path, result);
+            System.out.println("前: i=" + i + ",path=" + path.toString());
+            dfsCombine(n, k, i + 1, path, result);
             path.removeLast();
+            System.out.println("后: i=" + i + ",path=" + path.toString());
         }
     }
 }

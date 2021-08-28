@@ -16,7 +16,7 @@ public class Topic2 {
      * <p>输入：l1 = [2,4,3], l2 = [5,6,4] 输出：[7,0,8] 解释：342 + 465 = 807.
      */
     public static void main(String[] args) {
-        int[] arr1 = {9, 9, 9, 9, 9, 9, 9}, arr2 = {9, 9, 9, 9};
+        int[] arr1 = {2,4,3}, arr2 = {5,6,4};
         ListNode l1 = ListNode.buildList(arr1);
         ListNode l2 = ListNode.buildList(arr2);
         ListNode result = addTwoNumbers(l1, l2);

@@ -25,6 +25,22 @@ public class Topic78 {
         System.out.println(result);
     }
 
+    public List<List<Integer>> subsets1(int[] nums) {
+        List<Integer> path = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        for (int mask = 0; mask < (1 << n); ++mask) {
+            path.clear();
+            for (int i = 0; i < n; ++i) {
+                if ((mask & (1 << i)) != 0) {
+                    path.add(nums[i]);
+                }
+            }
+            ans.add(new ArrayList<>(path));
+        }
+        return ans;
+    }
+
     public static List<List<Integer>> subsets(int[] nums) {
         if (nums == null || nums.length < 1) {
             return Collections.emptyList();
@@ -41,9 +57,10 @@ public class Topic78 {
             result.add(new ArrayList<>(path));
             return;
         }
-
+        // 加入当前元素回溯
         path.addLast(nums[curr]);
         dfs(nums, len, curr + 1, path, result);
+        // 移除当前元素回溯
         path.removeLast();
         dfs(nums, len, curr + 1, path, result);
     }

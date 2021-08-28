@@ -1,6 +1,5 @@
 package com.github.black.hole.netty.server;
 
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -8,6 +7,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.concurrent.CompletableFuture;
 
@@ -48,23 +48,36 @@ public class NioServer {
                             SocketChannel sc = ssc.accept();
                             sc.configureBlocking(false);
                             sc.register(selector, SelectionKey.OP_READ);
-                            System.out.println("accept a client: " + sc.socket().getInetAddress().getHostAddress());
+                            System.out.println(
+                                    "accept a client: "
+                                            + sc.socket().getInetAddress().getHostAddress());
                         } else if (key.isReadable()) {
-                            CompletableFuture.runAsync(() -> {
-                                try {
-                                    SocketChannel socketChannel = (SocketChannel) key.channel();
-                                    ByteBuffer buffer = ByteBuffer.allocate(1024);
-                                    socketChannel.read(buffer);
-                                    buffer.flip();
-                                    System.out.println("收到客户端" + socketChannel.socket().getInetAddress().getHostName() + "的数据：" + new String(buffer.array()));
-                                    //将数据添加到key中
-                                    ByteBuffer outBuffer = ByteBuffer.wrap(buffer.array());
-                                    socketChannel.write(outBuffer);// 将消息回送给客户端
-                                    key.cancel();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            CompletableFuture.runAsync(
+                                    () -> {
+                                        try {
+                                            SocketChannel socketChannel =
+                                                    (SocketChannel) key.channel();
+                                            ByteBuffer buffer = ByteBuffer.allocate(100);
+                                            socketChannel.read(buffer);
+                                            buffer.flip();
+                                            System.out.println(
+                                                    "收到客户端"
+                                                            + socketChannel
+                                                                    .socket()
+                                                                    .getInetAddress()
+                                                                    .getHostName()
+                                                            + "的数据："
+                                                            + new String(
+                                                                    buffer.array(),
+                                                                    StandardCharsets.UTF_8));
+                                            // 将数据添加到key中
+                                            ByteBuffer outBuffer = ByteBuffer.wrap(buffer.array());
+                                            socketChannel.write(outBuffer); // 将消息回送给客户端
+                                            key.cancel();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
                         }
                         // 移除已处理事件
                         selectionKeys.remove();

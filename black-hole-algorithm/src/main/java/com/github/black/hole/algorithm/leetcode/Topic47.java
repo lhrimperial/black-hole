@@ -21,7 +21,7 @@ public class Topic47 {
      * <p>输入：nums = [1,1,2] 输出： [[1,1,2], [1,2,1], [2,1,1]]
      */
     public static void main(String[] args) {
-        int[] arr = {1, 1, 2};
+        int[] arr = {1,2, 1};
         // 方法一：使用Set保存结果集
         // 方法二：使用排序+减支
         List<List<Integer>> result = test(arr);

@@ -25,7 +25,7 @@ public class Topic236 {
         List<Integer> levelOrder = new ArrayList<>();
         TreeNode.levelOrder(node, levelOrder);
         System.out.println("层次遍历：" + levelOrder.toString());
-        TreeNode result = lowestCommonAncestor(node, new TreeNode(4), new TreeNode(6));
+        TreeNode result = lowestCommonAncestor(node, new TreeNode(5), new TreeNode(1));
         System.out.println(result.getValue());
     }
 
