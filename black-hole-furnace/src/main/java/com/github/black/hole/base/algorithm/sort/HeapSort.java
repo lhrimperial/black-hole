@@ -10,7 +10,7 @@ public class HeapSort {
 
     /** 堆是一个完全二叉树；堆中每一个节点的值都必须大于等于（或小于等于）其子树中每个节点的值。 */
     public static void main(String[] args) {
-        int[] arr = {49, 38, 65, 97, 23, 22, 76, 1, 5, 8, 2, 0, -1, 22};
+        int[] arr = {1, 3, -1, -3, -4, 5, 3, 6, 7};
         heapSort(arr);
         System.out.println("排序后:" + Arrays.toString(arr));
     }
@@ -41,6 +41,7 @@ public class HeapSort {
         for (int i = (arr.length - 1) / 2; i >= 0; i--) {
             heaping(arr, arr.length - 1, i);
         }
+        System.out.println(Arrays.toString(arr));
     }
 
     /**

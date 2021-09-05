@@ -30,6 +30,7 @@
         <dubbo.version>2.7.3</dubbo.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.4.13</zookeeper.version>
+        <zkClient.version>0.9</zkClient.version>
     </properties>
 
     <dependencyManagement>
@@ -121,6 +122,13 @@
                         <artifactId>slf4j-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!-- zkclient -->
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zkClient.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

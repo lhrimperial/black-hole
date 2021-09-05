@@ -20,7 +20,7 @@ public class GenericServiceHandler {
         application.setName("api-generic-consumer");
 
         RegistryConfig registry = new RegistryConfig();
-        registry.setAddress("zookeeper://ifarmshop.com:2181");
+        registry.setAddress("zookeeper://ifarmshop.com:21811");
 
         application.setRegistry(registry);
         // 该实例很重量，里面封装了所有与注册中心及服务提供方连接，请缓存

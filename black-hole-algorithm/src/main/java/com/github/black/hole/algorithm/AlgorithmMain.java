@@ -2,6 +2,7 @@ package com.github.black.hole.algorithm;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.TreeMap;
 
 /**
  * @author hairen.long
@@ -42,6 +43,8 @@ public class AlgorithmMain {
         printf(y);
         int z = x | (1 << 2);
         printf(z);
+
+        TreeMap map = new TreeMap();
     }
 
     private void test() {

@@ -1,0 +1,3 @@
+rabbitmq:
+  publisher-returns: true
+  publisher-confirm-type: correlated

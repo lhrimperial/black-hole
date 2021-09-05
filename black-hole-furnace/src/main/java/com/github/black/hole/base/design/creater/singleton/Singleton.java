@@ -11,6 +11,7 @@ package com.github.black.hole.base.design.creater.singleton;
  * @date 2020/6/18
  */
 public class Singleton {
+
     private static class SingletonHolder {
         public static final Singleton INSTANCE = new Singleton();
     }
@@ -19,5 +20,62 @@ public class Singleton {
 
     public static final Singleton getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+
+    /** 饿汉模式 */
+    public static class Singleton1 {
+        private static Singleton1 instance = new Singleton1();
+
+        private Singleton1() {}
+
+        public static Singleton1 getInstance() {
+            return instance;
+        }
+    }
+
+    /** 懒汉模式（线程不安全） */
+    public static class Singleton2 {
+        private static Singleton2 instance;
+
+        private Singleton2() {}
+
+        public static Singleton2 getInstance() {
+            if (instance == null) {
+                instance = new Singleton2();
+            }
+            return instance;
+        }
+    }
+
+    /** 懒汉模式（线程安全） */
+    public static class Singleton3 {
+        private static Singleton3 instance;
+
+        private Singleton3() {}
+
+        public static synchronized Singleton3 getInstance() {
+            if (instance == null) {
+                instance = new Singleton3();
+            }
+            return instance;
+        }
+    }
+
+    /** 双重检查模式 （DCL） */
+    public static class Singleton4 {
+        private static volatile Singleton4 instance;
+
+        private Singleton4() {}
+
+        public static Singleton4 getInstance() {
+            if (instance == null) {
+                synchronized (Singleton4.class) {
+                    if (instance == null) {
+                        instance = new Singleton4();
+                    }
+                }
+            }
+            return instance;
+        }
     }
 }

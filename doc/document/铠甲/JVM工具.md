@@ -1,5 +1,9 @@
 #### JVM工具
 
+Dump 文件分析工具：https://fastthread.io/#
+
+
+
 JDK下面的工具程序都是调用的**tools.jar**、**sa-jdi.jar**类库下的函数，仅仅是对这个类库进行简单的封装，所以这些工具一般都很小。如果需要监控远程JVM的话，需要在启动时开启JMX管理功能（参数是：-Dcom.sun.management.jmxremote），当然还需要设置监控端口、用户名、密码、身份认证开关、SSL验证开关等。
 
 ##### JPS
@@ -353,3 +357,4 @@ jstack命令格式：
 
 ##### VisualVM
 
+visual gc插件
