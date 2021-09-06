@@ -44,7 +44,7 @@
         <commons-codec.version>1.11</commons-codec.version>
 
         <!--third frame-->
-        <netty-all.version>4.1.25.Final</netty-all.version>
+        <netty-all.version>4.1.42.Final</netty-all.version>
         <mvel.version>2.4.5.Final</mvel.version>
         <easy-excel.version>2.2.6</easy-excel.version>
         <apache.poi.version>4.0.1</apache.poi.version>
