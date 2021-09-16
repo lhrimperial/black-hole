@@ -32,12 +32,16 @@ public class Topic52 {
             return 1;
         } else {
             int count = 0;
+            // 取出可以放皇后的位置
             int spaces = ~(col | pos | neg) & ((1 << n) - 1);
             while (spaces > 0) {
+                // 取出最低位
                 int lowBit = spaces & (-spaces);
+                // 设置当前列为已放皇后，当前位置影响左下位与右下位，通过左右移位影响下一行
                 count +=
                         dfsCountNQueue(
                                 n, row + 1, col | lowBit, (pos | lowBit) >> 1, (neg | lowBit) << 1);
+                // 清零低位
                 spaces &= spaces - 1;
             }
             return count;
@@ -61,6 +65,7 @@ public class Topic52 {
         } else {
             int count = 0;
             for (int i = 0; i < n; i++) {
+                // 列 正斜线 反斜线 是否包含当前位置
                 if (col.contains(i) || pos.contains(row + i) || neg.contains(row - i)) {
                     System.out.println("row=" + row + ",col=" + i);
                     continue;

@@ -13,9 +13,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author hairen.long
@@ -25,8 +30,34 @@ import java.util.Map;
 public class MybatisMain {
 
     public static void main(String[] args) throws Exception {
-                        SpringApplication.run(MybatisMain.class, args);
-//        declarative();
+        SpringApplication.run(MybatisMain.class, args);
+        //        declarative();
+        testLeak();
+        testWhile();
+    }
+
+    public static void testWhile() {
+        while (true) {
+            for (int i = 0; i < 10000; i++) {
+                for (int j = 0; j < 1000; j++) {
+                    System.out.println(i*j);
+                }
+            }
+        }
+    }
+
+    public static List<TestEntity> container = new ArrayList<>();
+
+    public static void testLeak() {
+        Executor executor = new ScheduledThreadPoolExecutor(1);
+        ((ScheduledThreadPoolExecutor) executor)
+                .scheduleAtFixedRate(
+                        () -> {
+                            container.add(new TestEntity());
+                        },
+                        5,
+                        60,
+                        TimeUnit.SECONDS);
     }
 
     public static void declarative() throws Exception {
@@ -48,14 +79,14 @@ public class MybatisMain {
             //             param);
             //                        System.out.println("sql2:" + entity);
             //
-//            QueryPage queryPage =
-//                    QueryPage.builder()
-//                            .pageIndex(1)
-//                            .pageSize(10)
-//                            .param(TestEntity.builder().id(1).build())
-//                            .build();
-//            List<TestEntity> list = testMapper.listEntity(queryPage);
-//            System.out.println(JSON.toJSONString(list));
+            //            QueryPage queryPage =
+            //                    QueryPage.builder()
+            //                            .pageIndex(1)
+            //                            .pageSize(10)
+            //                            .param(TestEntity.builder().id(1).build())
+            //                            .build();
+            //            List<TestEntity> list = testMapper.listEntity(queryPage);
+            //            System.out.println(JSON.toJSONString(list));
 
             SubQuery query = SubQuery.builder().id(1L).name("andy").build();
             List<TestEntity> list = testMapper.listByQuery(query);

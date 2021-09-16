@@ -52,11 +52,15 @@ public class Topic51 {
             }
             resp.add(sub);
         } else {
+            // 取出列、右斜边、左斜边可选位置，截取n位有效位
             int spaces = ~(col | pos | neg) & ((1 << n) - 1);
             while (spaces > 0) {
+                // 取最低位
                 int lowBit = spaces & (-spaces);
+                // 最低位所在bit位置
                 int bitCount = Integer.bitCount(lowBit - 1);
                 chess[row][bitCount] = true;
+                // 通过设置当前行来影响下一行
                 dfsSolveNQueue(
                         n,
                         row + 1,

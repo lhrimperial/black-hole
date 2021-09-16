@@ -31,7 +31,7 @@ public class Topic37 {
             {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
             {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         };
-        solveSudokuBit(chars);
+        solveSudoku2(chars);
         printf(chars);
 
         char[][] result = {
@@ -83,7 +83,7 @@ public class Topic37 {
         while (bitSpace != 0 && !valid) {
             // 取低位的数字, 1代表这个位上有数字，位置下标即为这个数值 eg：101000，最低位1表示3
             int digitBit = bitSpace & (-bitSpace);
-            //求一个位所在位置，需要通过 -1 的方式统计他后面有多少个1即求出他的位置
+            // 求一个位所在位置，需要通过 -1 的方式统计他后面有多少个1即求出他的位置
             int digit = Integer.bitCount(digitBit - 1);
             board[i][j] = (char) (digit + '1');
             int offset = 1 << digit;
@@ -96,100 +96,6 @@ public class Topic37 {
             block[iBlock] ^= offset;
             // 清除低位
             bitSpace &= bitSpace - 1;
-        }
-    }
-
-    public static void solveSudokuBit(char[][] board) {
-        if (board == null || board.length == 0) {
-            return;
-        }
-        int[] row = new int[9];
-        int[] col = new int[9];
-        int[][] block = new int[3][3];
-        List<int[]> spaces = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] == '.') {
-                    spaces.add(new int[] {i, j});
-                } else {
-                    int num = board[i][j] - '1';
-                    row[i] ^= 1 << num;
-                    col[j] ^= 1 << num;
-                    block[i / 3][j / 3] ^= 1 << num;
-                }
-            }
-        }
-        dfsBit(board, 0, spaces, row, col, block);
-    }
-
-    public static void dfsBit(
-            char[][] board, int pos, List<int[]> spaces, int[] row, int[] col, int[][] block) {
-        if (pos == spaces.size()) {
-            valid = true;
-            return;
-        }
-        int[] space = spaces.get(pos);
-        int i = space[0], j = space[1];
-        int mask = ~(row[i] | col[j] | block[i / 3][j / 3]) & 0x1ff;
-        while (mask != 0 && !valid) {
-
-            //            for (; mask != 0 && !valid; mask &= (mask - 1)) {
-            int digitMask = mask & (-mask);
-            int digit = Integer.bitCount(digitMask - 1);
-            board[i][j] = (char) (digit + '0' + 1);
-            printf(board);
-            row[i] ^= 1 << digit;
-            col[j] ^= 1 << digit;
-            block[i / 3][j / 3] ^= 1 << digit;
-            dfsBit(board, pos + 1, spaces, row, col, block);
-            row[i] ^= 1 << digit;
-            col[j] ^= 1 << digit;
-            block[i / 3][j / 3] ^= 1 << digit;
-            mask &= (mask - 1);
-        }
-    }
-
-    public static void solveSudokuTest(char[][] board) {
-        if (board == null || board.length == 0) {
-            return;
-        }
-        boolean[][] row = new boolean[9][9];
-        boolean[][] col = new boolean[9][9];
-        boolean[][] block = new boolean[9][9];
-        List<int[]> spaces = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] == '.') {
-                    spaces.add(new int[] {i, j});
-                } else {
-                    int num = board[i][j] - '1';
-                    row[i][num] = col[j][num] = block[i / 3 * 3 + j / 3][num] = true;
-                }
-            }
-        }
-        dfsTest(board, 0, spaces, row, col, block);
-    }
-
-    public static void dfsTest(
-            char[][] chars,
-            int pos,
-            List<int[]> spaces,
-            boolean[][] row,
-            boolean[][] col,
-            boolean[][] block) {
-        if (pos == spaces.size()) {
-            valid = true;
-            return;
-        }
-        int[] space = spaces.get(pos);
-        int i = space[0], j = space[1];
-        for (int num = 0; num < 9 && !valid; num++) {
-            if (!row[i][num] && !col[j][num] && !block[i / 3 * 3 + j / 3][num]) {
-                row[i][num] = col[j][num] = block[i / 3 * 3 + j / 3][num] = true;
-                chars[i][j] = (char) (num + '1');
-                dfsTest(chars, pos + 1, spaces, row, col, block);
-                row[i][num] = col[j][num] = block[i / 3 * 3 + j / 3][num] = false;
-            }
         }
     }
 
@@ -211,10 +117,10 @@ public class Topic37 {
                 }
             }
         }
-        dfs1(board, 0, row, col, block, spaces);
+        dfsSolveSudoku1(board, 0, row, col, block, spaces);
     }
 
-    private static void dfs1(
+    private static void dfsSolveSudoku1(
             char[][] board,
             int pos,
             boolean[][] row,
@@ -231,7 +137,7 @@ public class Topic37 {
             if (!row[i][num] && !col[j][num] && !block[i / 3][j / 3][num]) {
                 row[i][num] = col[j][num] = block[i / 3][j / 3][num] = true;
                 board[i][j] = (char) (num + '1');
-                dfs1(board, pos + 1, row, col, block, spaces);
+                dfsSolveSudoku1(board, pos + 1, row, col, block, spaces);
                 row[i][num] = col[j][num] = block[i / 3][j / 3][num] = false;
             }
         }

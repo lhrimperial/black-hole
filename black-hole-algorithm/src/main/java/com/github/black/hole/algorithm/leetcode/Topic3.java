@@ -18,25 +18,8 @@ public class Topic3 {
      */
     public static void main(String[] args) {
         String s = "abcadbcdbb";
-        int result = test(s);
+        int result = lengthOfLongestSubstring1(s);
         System.out.println(result);
-    }
-
-    public static int test(String s) {
-        if (s == null || s.length() < 1) {
-            return 0;
-        }
-        Map<Character, Integer> map = new HashMap<>();
-        int left = 0, ans = 0;
-        for (int i = 0, len = s.length(); i < len; i++) {
-            char ch = s.charAt(i);
-            if (map.containsKey(ch)) {
-                left = Math.max(left, map.get(ch) + 1);
-            }
-            map.put(ch, i);
-            ans = Math.max(ans, i - left + 1);
-        }
-        return ans;
     }
 
     public static int lengthOfLongestSubstring1(String s) {
