@@ -78,4 +78,12 @@ public class ListNode {
     public String toString() {
         return "" + this.value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ListNode) {
+            return this.value == ((ListNode) obj).value;
+        }
+        return false;
+    }
 }
