@@ -22,109 +22,42 @@ import java.util.stream.IntStream;
 public class AbsReview {
 
     public static void main(String[] args) {
-        int[] arr = {7, 8, 9, 1, 2, 3, 4, 5};
-        System.out.println(search(arr, 2));
+        int[] arr = IntStream.rangeClosed(1, 10).toArray();
+        ListNode node = reverseKGroup(ListNode.buildList(arr), 3);
+        ListNode.print(node);
     }
 
-    public static int search(int[] arr, int target) {
-        if (arr == null || arr.length == 0) {
-            return -1;
+    public static int lengthOfLongestSubstring2(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
         }
-        int low = 0, high = arr.length - 1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (target == arr[mid]) {
-                return mid;
-            }
-            // 前半段有序
-            if (arr[low] < arr[mid]) {
-                // 并且在前半段
-                if (target >= arr[low] && target < arr[mid]) {
-                    high = mid - 1;
-                } else {
-                    low = mid + 1;
-                }
-            } else {
-                if (target > arr[mid] && target <= arr[high]) {
-                    low = mid + 1;
-                } else {
-                    high = mid - 1;
-                }
-            }
-        }
-        return -1;
+        return 0;
     }
 
-    public static void insertSort(int[] arr) {
-        if (arr == null || arr.length == 0) {
-            return;
-        }
-        for (int i = 0, len = arr.length; i < len; i++) {
-            boolean swap = false;
-            for (int j = 0; j < len - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int t = arr[j];
-                    arr[j + 1] = arr[j];
-                    arr[j] = t;
-                    swap = true;
-                }
-            }
-            if (!swap) {
-                break;
-            }
-        }
-    }
-
-    public static int binarySearch(int[] arr, int target) {
-        if (arr == null || arr.length == 0) {
-            return -1;
-        }
-        int left = 0, right = arr.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (arr[mid] == target) {
-                return mid;
-            } else if (arr[mid] < target) {
-                left = mid + 1;
-            } else if (arr[mid] > target) {
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-
-    public static boolean hasCycle(ListNode head) {
-        if (head == null) {
-            return false;
-        }
-        ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if (slow == fast) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static ListNode detectCycle(ListNode head) {
+    public static ListNode reverseKGroup(ListNode head, int k) {
         if (head == null) {
             return null;
         }
-        ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if (slow == fast) {
-                break;
+        ListNode a = head, b = head;
+        for (int i = 0; i < k; i++) {
+            if (b == null) {
+                return head;
             }
+            b = b.next;
         }
-        fast = head;
-        while (fast != slow) {
-            fast = fast.next;
-            slow = slow.next;
+        ListNode newHead = reverse(a, b);
+        a.next = reverseKGroup(b, k);
+        return newHead;
+    }
+
+    public static ListNode reverse(ListNode head, ListNode tail) {
+        ListNode curr = head, pre = null, next = null;
+        while (curr != tail) {
+            next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
         }
-        return slow;
+        return pre;
     }
 }
