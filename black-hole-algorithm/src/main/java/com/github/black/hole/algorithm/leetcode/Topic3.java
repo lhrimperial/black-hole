@@ -20,6 +20,26 @@ public class Topic3 {
         String s = "abcadbcdbb";
         int result = lengthOfLongestSubstring1(s);
         System.out.println(result);
+        System.out.println(lengthOfLongestSubstring2(s));
+    }
+
+    public static int lengthOfLongestSubstring2(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        Map<Character, Integer> window = new HashMap<>();
+        int left = 0, right = 0;
+        int ans = 0;
+        while (right < s.length()) {
+            char rc = s.charAt(right++);
+            window.put(rc, window.getOrDefault(rc, 0) + 1);
+            while (window.get(rc) > 1) {
+                char lc = s.charAt(left++);
+                window.put(lc, window.getOrDefault(lc, 0) - 1);
+            }
+            ans = Math.max(ans, right - left);
+        }
+        return ans;
     }
 
     public static int lengthOfLongestSubstring1(String s) {

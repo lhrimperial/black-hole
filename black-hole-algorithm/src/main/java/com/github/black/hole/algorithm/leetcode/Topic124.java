@@ -19,13 +19,9 @@ public class Topic124 {
      * <p>输入：root = [1,2,3] 输出：6 解释：最优路径是 2 -> 1 -> 3 ，路径和为 2 + 1 + 3 = 6
      */
     public static void main(String[] args) {
-        int[] arr = {8,5,3,2,4,7,6,11,10,12};
-        TreeNode node = TreeNode.buildTree(arr);
-        List<Integer> result = new ArrayList<>();
-        TreeNode.preOrder(node,result);
-        System.out.println(result.toString());
+        TreeNode node = TreeNode.buildTree(new int[] {1, 2, 3});
         maxPathSum(node);
-        System.out.println(ans);
+        System.out.println("ans = " + ans);
     }
 
     private static int ans = Integer.MIN_VALUE;
@@ -34,11 +30,9 @@ public class Topic124 {
         if (root == null) {
             return 0;
         }
-        int left = Math.max(0, maxPathSum(root.getLeft()));
-        int right = Math.max(0, maxPathSum(root.getRight()));
-        // 最大值由左右子树加根节点
-        ans = Math.max(ans, root.getValue() + left + right);
-        // 返回加大的子树
+        int left = maxPathSum(root.left);
+        int right = maxPathSum(root.getRight());
+        ans = Math.max(ans, left + right + root.getValue());
         return root.getValue() + Math.max(left, right);
     }
 }

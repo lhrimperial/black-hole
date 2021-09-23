@@ -8,11 +8,29 @@ public class Topic19 {
 
     /** 删除链表的倒数第 N 个结点 */
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        ListNode node = findFromEnd(ListNode.buildList(arr), 5);
-        System.out.println(node.value);
-        node = removeNthFromEnd(ListNode.buildList(arr), 5);
+        int[] arr = {1, 2, 3,4,5,6,7};
+        ListNode node = removeNthFromEnd1(ListNode.buildList(arr), 3);
+        System.out.println(node == null ? "null" : node.value);
         ListNode.print(node);
+    }
+
+    public static ListNode removeNthFromEnd1(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode preHead = new ListNode(-1);
+        preHead.next = head;
+        ListNode fast = head;
+        ListNode slow = preHead;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return preHead.next;
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {

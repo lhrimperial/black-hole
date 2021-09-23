@@ -23,47 +23,58 @@ public class Topic105 {
         System.out.println(result.toString());
     }
 
+    /**
+     * 前序遍历第一个总是根，中序遍历的根前面的都是左子树，后半部分都是右子树
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i], i);
-        }
-        return buildTreeHelper(preorder, 0, preorder.length, inorder, 0, inorder.length, map);
-    }
-
-    private static TreeNode buildTreeHelper(
-            int[] preorder,
-            int p_start,
-            int p_end,
-            int[] inorder,
-            int i_start,
-            int i_end,
-            HashMap<Integer, Integer> map) {
-        if (p_start == p_end) {
+        if (preorder == null || inorder == null) {
             return null;
         }
-        int root_val = preorder[p_start];
-        TreeNode root = new TreeNode(root_val);
-        int i_root_index = map.get(root_val);
-        int leftNum = i_root_index - i_start;
+        Map<Integer, Integer> inorderMap = new HashMap<>(inorder.length);
+        for (int i = 0, len = inorder.length; i < len; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTree(
+                preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inorderMap);
+    }
+
+    public static TreeNode buildTree(
+            int[] preorder,
+            int preStart,
+            int preEnd,
+            int[] inorder,
+            int inStart,
+            int inEnd,
+            Map<Integer, Integer> inMap) {
+
+        if (preStart > preEnd || inStart > inEnd) return null;
+
+        TreeNode root = new TreeNode(preorder[preStart]);
+        int inRoot = inMap.get(root.value);
+        int numsLeft = inRoot - inStart;
+
         root.left =
-                buildTreeHelper(
+                buildTree(
                         preorder,
-                        p_start + 1,
-                        p_start + leftNum + 1,
+                        preStart + 1,
+                        preStart + numsLeft,
                         inorder,
-                        i_start,
-                        i_root_index,
-                        map);
+                        inStart,
+                        inRoot - 1,
+                        inMap);
         root.right =
-                buildTreeHelper(
+                buildTree(
                         preorder,
-                        p_start + leftNum + 1,
-                        p_end,
+                        preStart + numsLeft + 1,
+                        preEnd,
                         inorder,
-                        i_root_index + 1,
-                        i_end,
-                        map);
+                        inRoot + 1,
+                        inEnd,
+                        inMap);
         return root;
     }
 }

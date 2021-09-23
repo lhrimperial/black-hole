@@ -20,6 +20,7 @@ public class Topic206 {
         int[] arr = IntStream.rangeClosed(1, 6).toArray();
         ListNode ListNode = buildList(arr);
         print(reverseList2(ListNode));
+
     }
 
     /**

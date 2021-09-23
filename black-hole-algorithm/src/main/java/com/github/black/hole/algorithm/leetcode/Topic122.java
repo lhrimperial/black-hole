@@ -19,9 +19,25 @@ public class Topic122 {
      * 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
      */
     public static void main(String[] args) {
-        int[] arr = {1,2,3,4,5};
+        int[] arr = {1, 2, 3, 4, 5};
         int result = maxProfit(arr);
         System.out.println(result);
+        System.out.println(maxProfit1(arr));
+    }
+
+    public static int maxProfit1(int[] prices) {
+        if (prices == null || prices.length < 2) {
+            return 0;
+        }
+        int len = prices.length;
+        int[][] dp = new int[len][2];
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        for (int i = 1; i < len; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+        }
+        return dp[len - 1][0];
     }
 
     public static int maxProfit(int[] prices) {
