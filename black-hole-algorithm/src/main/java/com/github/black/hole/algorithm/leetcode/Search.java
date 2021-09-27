@@ -6,6 +6,11 @@ package com.github.black.hole.algorithm.leetcode;
  */
 public class Search {
 
+    public static void main(String[] args) {
+        int[] arr = {3,1};
+        System.out.println(search(arr, 1));
+    }
+
     /**
      * 一个有序数组反转之后查找
      *
@@ -17,22 +22,23 @@ public class Search {
         if (arr == null || arr.length == 0) {
             return -1;
         }
-        int low = 0, high = arr.length - 1;
+        int n = arr.length;
+        int low = 0, high = n - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
             if (target == arr[mid]) {
                 return mid;
             }
             // 前半段有序
-            if (arr[low] < arr[mid]) {
+            if (arr[0] <= arr[mid]) {
                 // 并且在前半段
-                if (target >= arr[low] && target < arr[mid]) {
+                if (arr[0] <= target && target < arr[mid]) {
                     high = mid - 1;
                 } else {
                     low = mid + 1;
                 }
             } else {
-                if (target > arr[mid] && target <= arr[high]) {
+                if (arr[mid] < target && target <= arr[n - 1]) {
                     low = mid + 1;
                 } else {
                     high = mid - 1;

@@ -14,7 +14,27 @@ public class Topic92 {
      */
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-        print(reverseBetween(buildList(arr), 2, 4));
+        print(reverseBetween1(buildList(arr), 2, 4));
+    }
+
+    public static ListNode reverseBetween1(ListNode head, int left, int right) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode preHead = new ListNode(-1);
+        preHead.next = head;
+        ListNode pre = preHead;
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+        ListNode curr = pre.next, next = null;
+        for (int i = 0; i < right - left; i++) {
+            next = curr.next;
+            curr.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+        return preHead.next;
     }
 
     public static ListNode reverseBetween(ListNode head, int left, int right) {
@@ -22,13 +42,14 @@ public class Topic92 {
             return head;
         }
         if (left == 1) {
-          return   reverseN(head, right);
+            return reverseN(head, right);
         }
         head.next = reverseBetween(head.next, left - 1, right - 1);
         return head;
     }
 
     private static ListNode after;
+
     private static ListNode reverseN(ListNode head, int n) {
         if (n == 1) {
             after = head.next;

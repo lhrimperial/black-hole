@@ -19,7 +19,7 @@ public class Topic46 {
      */
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
-        List<List<Integer>> result = test(arr);
+        List<List<Integer>> result = permute(arr);
         System.out.println(result.toString());
     }
 
@@ -29,39 +29,6 @@ public class Topic46 {
      * @param nums
      * @return
      */
-    public static List<List<Integer>> test(int[] nums) {
-        if (nums == null || nums.length < 1) {
-            return Collections.emptyList();
-        }
-        List<List<Integer>> result = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        boolean[] used = new boolean[nums.length];
-        dfsTest(nums, nums.length, 0, used, path, result);
-        return result;
-    }
-
-    private static void dfsTest(
-            int[] nums,
-            int len,
-            int depth,
-            boolean[] used,
-            Deque<Integer> path,
-            List<List<Integer>> result) {
-        if (depth == len) {
-            result.add(new ArrayList<>(path));
-            return;
-        }
-        for (int i = 0; i < len; i++) {
-            if (!used[i]) {
-                path.addLast(nums[i]);
-                used[i] = true;
-                dfsTest(nums, len, depth + 1, used, path, result);
-                path.removeLast();
-                used[i] = false;
-            }
-        }
-    }
-
     public static List<List<Integer>> permute(int[] nums) {
         if (nums == null || nums.length < 1) {
             return Collections.emptyList();

@@ -14,13 +14,14 @@ public class Topic69 {
      * <p>由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
      */
     public static void main(String[] args) {
-        System.out.println(Math.sqrt(0));
-        System.out.println(Math.sqrt(1));
-        System.out.println(sqrt(9, 1e-7));
-        System.out.println(sqrt(5, 1e-7));
-        System.out.println(myDoubleSqrt(9, 1e-7));
-        System.out.println(myDoubleSqrt(2, 1e-7));
-        System.out.println(myDoubleSqrt(2, 1e-9));
+//        System.out.println(Math.sqrt(0));
+//        System.out.println(Math.sqrt(1));
+//        System.out.println(sqrt(9, 1e-7));
+//        System.out.println(sqrt(5, 1e-7));
+//        System.out.println(myDoubleSqrt(9, 1e-7));
+//        System.out.println(myDoubleSqrt(2, 1e-7));
+//        System.out.println(myDoubleSqrt(2, 1e-9));
+        System.out.println(myIntSqrt(8));
     }
 
     public static int myIntSqrt(int x) {

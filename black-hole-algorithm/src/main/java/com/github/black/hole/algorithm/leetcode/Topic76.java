@@ -24,39 +24,8 @@ public class Topic76 {
      * <p>输入：s = "ADOBECODEBANC", t = "ABC" 输出："BANC"
      */
     public static void main(String[] args) {
-        System.out.println(minWindow("ADOBECODEBANC", "ABDC"));
-        System.out.println(minWindow1("ADOBECODEBANC", "ABDC"));
-    }
-
-    public static String minWindow1(String s, String t) {
-        HashMap<Character, Integer> window = new HashMap<>();
-        HashMap<Character, Integer> need = new HashMap<>();
-        for (char ch : t.toCharArray()) {
-            need.put(ch, need.getOrDefault(ch, 0) + 1);
-        }
-        String ans = "";
-        int len = s.length() + 1, cnt = 0;
-        // 有多少个元素符合
-        for (int right = 0, left = 0; right < s.length(); right++) {
-            char rc = s.charAt(right);
-            window.put(rc, window.getOrDefault(rc, 0) + 1);
-            if (need.containsKey(rc) && window.get(rc) <= need.get(rc)) {
-                cnt++;
-            }
-            while (left < right
-                    && (!need.containsKey(s.charAt(left))
-                            || window.get(s.charAt(left)) > need.get(s.charAt(left)))) {
-                char lc = s.charAt(left);
-                int count = window.get(lc) - 1;
-                window.put(lc, count);
-                left++;
-            }
-            if (cnt == t.length() && right - left + 1 < len) {
-                len = right - left + 1;
-                ans = s.substring(left, right + 1);
-            }
-        }
-        return ans;
+        String s = "", t = "";
+        System.out.println(minWindow(s,t));
     }
 
     public static String minWindow(String s, String t) {
@@ -100,4 +69,6 @@ public class Topic76 {
         }
         return len == s.length() + 1 ? "" : s.substring(start, start + len);
     }
+
+
 }
