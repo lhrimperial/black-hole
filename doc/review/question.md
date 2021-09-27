@@ -1,24 +1,22 @@
 ### Question
 
-spring循环依赖
-自增索引优势（性能-页分裂，空间-辅助索引）
-zk与redis选主区别
-spring如何管理bean
-threadlocal 子线程引用
-sycn优化，锁升级
-栈的结构与执行过程，为什么选用栈
-删除空表会不会加锁
-mybatis sqlsession，默认分页缺点
-hashmap为什么扩展2n
-mysql减少回表优化
-mysql rr隔离级别如何解决可重复读于幻读
-高qps下频繁year GC 如何定位和保障稳定性
-RPC 核心需要哪些模块
-缓存与DB一致性保障
-
-ConcurrentHashMap HashMap 扩容的时候加入数据
-
-Jdk1.8 为什么废弃了永久代
+- spring循环依赖
+- 自增索引优势（性能-页分裂，空间-辅助索引）
+- zk与redis选主区别
+- spring如何管理bean
+- threadlocal 子线程引用
+- sycn优化，锁升级
+- 栈的结构与执行过程，为什么选用栈
+- 删除空表会不会加锁
+- mybatis sqlsession，默认分页缺点
+- hashmap为什么扩展2n
+- mysql减少回表优化
+- mysql rr隔离级别如何解决可重复读于幻读
+- 高qps下频繁year GC 如何定位和保障稳定性
+- RPC 核心需要哪些模块
+- 缓存与DB一致性保障
+- ConcurrentHashMap HashMap 扩容的时候加入数据
+- Jdk1.8 为什么废弃了永久代
 
 
 
