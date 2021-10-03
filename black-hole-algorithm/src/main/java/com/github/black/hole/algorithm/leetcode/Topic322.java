@@ -13,8 +13,7 @@ public class Topic322 {
      * <p>组成给定金额需要最少硬币个数
      */
     public static void main(String[] args) {
-        System.out.println(coinChange1(new int[] {1, 2, 5}, 11));
-        System.out.println(coinChange(new int[] {1, 2, 5}, 11));
+        System.out.println(coinChange(new int[] {2}, 3));
     }
 
     public static int coinChange(int[] coins, int amount) {
@@ -22,15 +21,19 @@ public class Topic322 {
         Arrays.fill(dp, amount + 1);
         // base case
         dp[0] = 0;
-        for (int i = 0, len = dp.length; i < len; i++) {
+        // 每种金额需要最少硬币数
+        for (int i = 1; i <= amount; i++) {
+            // 遍历每种币值
             for (int coin : coins) {
-                if (i - coin < 0) {
-                    continue;
+                // 只能从小于金额的币值里面选择
+                if (coin <= i) {
+                    // 金额i 有多种币值组合，从中选择最少的一种
+                    dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
                 }
-                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
             }
         }
-        return dp[amount];
+        System.out.println(Arrays.toString(dp));
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 
     /**

@@ -13,25 +13,22 @@ public class Topic63 {
      * <p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
      */
     public static void main(String[] args) {
-        int[][] grid = new int[][] {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+        int[][] grid = new int[][] {{1, 0}};
         System.out.println(uniquePathsWithObstacles(grid));
     }
 
-    public static int uniquePathsWithObstacles(int[][] grid) {
-        if (grid == null || grid.length == 0) {
-            return 0;
-        }
-        int m = grid.length, n = grid[0].length;
+    public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length, n = obstacleGrid[0].length;
         int[][] dp = new int[m][n];
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) {
             dp[i][0] = 1;
         }
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++) {
             dp[0][j] = 1;
         }
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                if (grid[i][j] == 0) {
+                if (obstacleGrid[i][j] == 0) {
                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
                 }
             }
