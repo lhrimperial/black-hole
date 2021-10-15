@@ -115,7 +115,7 @@ public class SudoQueue {
         }
     }
 
-    private static void printf(char[][] chars) {
+    public static void printf(char[][] chars) {
         if (chars == null || chars.length == 0) {
             return;
         }
@@ -136,16 +136,17 @@ public class SudoQueue {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (board[i][j] != '.') {
-                    int num = board[i][j] - '1';
+                    int num = board[i][j] - '1', offset = 1 << num;
                     int iBlock = i / 3 * 3 + j / 3;
-                    if ((row[i] & (1 << num)) > 0
-                            || (col[j] & (1 << num)) > 0
-                            || (block[iBlock] & (1 << num)) > 0) {
+                    // 对应位置已经有相应的数字
+                    if ((row[i] & offset) > 0
+                            || (col[j] & offset) > 0
+                            || (block[iBlock] & offset) > 0) {
                         return false;
                     }
-                    row[i] |= 1 << num;
-                    col[j] |= 1 << num;
-                    block[iBlock] |= 1 << num;
+                    row[i] |= offset;
+                    col[j] |= offset;
+                    block[iBlock] |= offset;
                 }
             }
         }
@@ -166,10 +167,12 @@ public class SudoQueue {
             int count = 0;
             int spaces = ~(col | pos | neg) & ((1 << n) - 1);
             while (spaces > 0) {
+                // 取最低位1
                 int lowBit = spaces & (-spaces);
                 count +=
                         dfsCountNQueue(
                                 n, row + 1, col | lowBit, (pos | lowBit) >> 1, (neg | lowBit) << 1);
+                // 清除最低位1
                 spaces &= spaces - 1;
             }
             return count;
@@ -217,5 +220,18 @@ public class SudoQueue {
                 spaces &= spaces - 1;
             }
         }
+    }
+
+    public boolean isPrime(int N) {
+        if (N < 2) {
+            return false;
+        }
+        int R = (int) Math.sqrt(N);
+        for (int d = 2; d <= R; ++d) {
+            if (N % d == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

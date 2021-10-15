@@ -14,6 +14,34 @@ https://vincentruan.github.io/2020/02/12/MySQL%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%
 
 
 
+#### MySql 排序原理
+
+1. 常规排序
+   a. 从表 t1 中获取满足 WHERE 条件的记录
+   b. 对于每条记录，将记录的主键 + 排序键 (id,col2) 取出放入 sort buffer
+   c. 如果 sort buffer 可以存放所有满足条件的 (id,col2) 对，则进行排序;否则 sort buffer 满后，进行排序并固化到临时文件中。(排序算法采用的是快速排序算法)
+   d. 若排序中产生了临时文件，需要利用归并排序算法，保证临时文件中记录是有序的
+   e. 循环执行上述过程，直到所有满足条件的记录全部参与排序
+   f. 扫描排好序的 (id,col2) 对，并利用 id 去捞取 SELECT 需要返回的列 (col1,col2,col3)
+   g. 将获取的结果集返回给用户。
+
+   > 两次IO：一次是捞 (id,col2), 第二次是捞 (col1,col2,col3)
+   >
+   > 结果按col2排序，ID是乱序，回表时是随机IO，mysql本身做了优化将ID排序之后再回表
+
+2. 优化排序
+
+   将所有需要返回的字段都放入sort buffer，而不仅仅是排序字段和主键，这样可以减少回表IO，只有单排序元组小于max_length_for_sort_data时才用优化排序
+
+3. 优先队列排序
+
+#### 优化
+
+1. 优先选择usering_index 的排序方式
+2. 加大 max_length_for_sort_data 参数的设置
+3. 去掉不必要的返回字段
+4. 增大 sort_buffer_size 参数设置
+
 
 
 #### explain

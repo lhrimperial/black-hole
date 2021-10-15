@@ -9,8 +9,8 @@ import java.util.Arrays;
 public class Sorts {
 
     public static void main(String[] args) {
-        int[] arr = {5, 3, 9, 6, 1, 7, 2, 4, 8};
-        mergeSort(arr, 0, arr.length - 1);
+        int[] arr = {5, 3, 9, 6, 1, 7, 8, 2, 4, 8};
+        quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -77,12 +77,21 @@ public class Sorts {
         }
     }
 
+    /**
+     * 大顶堆
+     *
+     * @param arr
+     * @param n 长度
+     * @param i 堆化位置
+     */
     public static void heaping(int[] arr, int n, int i) {
         while (true) {
             int pos = i, left = i * 2 + 1, right = i * 2 + 2;
+            // 顶顶 小于 左节点
             if (left <= n && arr[i] < arr[left]) {
                 pos = left;
             }
+            // 右节点 大于 左节点
             if (right <= n && arr[pos] < arr[right]) {
                 pos = right;
             }

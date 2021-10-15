@@ -1,8 +1,18 @@
 package com.github.black.hole.algorithm;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author hairen.long
@@ -45,6 +55,30 @@ public class AlgorithmMain {
         printf(z);
 
         TreeMap map = new TreeMap();
+    }
+
+    public static void source() {
+        Map<String, String> map = new HashMap<>();
+        map = new ConcurrentHashMap<>();
+        map.put("1", "1");
+        ThreadFactory calculateThreadFactory =
+                new ThreadFactoryBuilder().setNameFormat("ExecutorServiceCalculator-pool").build();
+
+        ThreadPoolExecutor pool =
+                new ThreadPoolExecutor(
+                        5,
+                        10,
+                        10,
+                        TimeUnit.SECONDS,
+                        new LinkedBlockingQueue<>(),
+                        calculateThreadFactory,
+                        new ThreadPoolExecutor.AbortPolicy());
+        ReentrantLock lock = new ReentrantLock();
+        try {
+            lock.lock();
+        } finally {
+            lock.unlock();
+        }
     }
 
     private void test() {

@@ -14,6 +14,23 @@ public class Topic123 {
      * <p>设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。
      */
     public static void main(String[] args) {
+        int[] prices = {3, 3, 5, 0, 0, 3, 1, 4};
+        System.out.println(maxProfit(prices));
+    }
 
+    public static int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+        int len = prices.length;
+        int b1 = -prices[0], s1 = 0;
+        int b2 = -prices[0], s2 = 0;
+        for (int i = 1; i < len; i++) {
+            b1 = Math.max(b1, -prices[i]);
+            s1 = Math.max(s1, b1 + prices[i]);
+            b2 = Math.max(b2, s1 - prices[i]);
+            s2 = Math.max(s2, b2 + prices[i]);
+        }
+        return s2;
     }
 }

@@ -36,17 +36,28 @@ public class Topic46 {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
         boolean[] used = new boolean[nums.length];
-        dfs(nums, nums.length, 0, used, path, result);
+        dfs1(nums,nums.length,0, used, path, result);
         return result;
     }
 
-    private static void dfs(
-            int[] nums,
-            int len,
-            int depth,
-            boolean[] used,
-            List<Integer> path,
-            List<List<Integer>> result) {
+    private static void dfs1(int[] nums,int len, int depth, boolean[] visited, List<Integer> path, List<List<Integer>> res) {
+        if (depth == len) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < len; i++) {
+            if (!visited[i]) {
+                path.add(nums[i]);
+                visited[i] = true;
+                dfs(nums, len,depth + 1, visited, path, res);
+                visited[i] =  false;
+                path.remove(path.size() - 1);
+            }
+
+        }
+    }
+
+    private static void dfs(int[] nums, int len, int depth, boolean[] used, List<Integer> path, List<List<Integer>> result) {
         if (depth == len) {
             result.add(new ArrayList<>(path));
             return;

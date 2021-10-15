@@ -15,11 +15,38 @@ public class Topic99 {
         root.left = new TreeNode(4);
         root.right = new TreeNode(1);
         root.left.right = new TreeNode(2);
-        recoverTree(root);
+        recoverTree1(root);
 
         List<Integer> result = new ArrayList<>();
         TreeNode.inOrder(root, result);
         System.out.println(result.toString());
+    }
+
+    static TreeNode prev, node1, node2;
+    public static void recoverTree1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        traver(root);
+        int t = node1.value;
+        node1.value = node2.value;
+        node2.value = t;
+    }
+
+    private static void traver(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        traver(root.left);
+        if (prev != null && prev.value > root.value) {
+            if (node1 == null) {
+                node1 = prev;
+            }
+            node2 = root;
+        }
+
+        prev = root;
+        traver(root.right);
     }
 
     private static TreeNode first;

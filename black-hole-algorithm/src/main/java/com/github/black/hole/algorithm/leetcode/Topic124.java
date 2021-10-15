@@ -30,8 +30,8 @@ public class Topic124 {
         if (root == null) {
             return 0;
         }
-        int left = maxPathSum(root.left);
-        int right = maxPathSum(root.getRight());
+        int left = Math.max(maxPathSum(root.left), 0);
+        int right = Math.max(maxPathSum(root.getRight()), 0);
         ans = Math.max(ans, left + right + root.getValue());
         return root.getValue() + Math.max(left, right);
     }

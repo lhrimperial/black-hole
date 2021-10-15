@@ -24,8 +24,43 @@ public class Topic76 {
      * <p>输入：s = "ADOBECODEBANC", t = "ABC" 输出："BANC"
      */
     public static void main(String[] args) {
-        String s = "", t = "";
-        System.out.println(minWindow(s,t));
+        String s = "ADOBECODEBANC", t = "ABC";
+        System.out.println(minWindow1(s,t));
+    }
+
+    public static String minWindow1(String s, String t) {
+        if (s == null || t == null) {
+            return "";
+        }
+        Map<Character, Integer> need = new HashMap<>();
+        for (char ch : t.toCharArray()) {
+            need.put(ch, need.getOrDefault(ch, 0) + 1);
+        }
+        int len = s.length(), left = 0, right = 0, valid = 0, begin = 0, min = len + 1;
+        Map<Character, Integer> window = new HashMap<>();
+        while (right < len) {
+            char rc = s.charAt(right++);
+            if (need.containsKey(rc)) {
+                window.put(rc, window.getOrDefault(rc, 0) + 1);
+                if (need.get(rc).equals(window.get(rc))) {
+                    valid++;
+                }
+            }
+            while (valid == need.size()) {
+                if (right - left < min) {
+                    begin = left;
+                    min = right - left;
+                }
+                char lc = s.charAt(left++);
+                if (need.containsKey(lc)) {
+                    if (need.get(lc).equals(window.get(lc))) {
+                        valid--;
+                    }
+                    window.put(lc, window.get(lc) - 1);
+                }
+            }
+        }
+        return min == len + 1 ? "" :s.substring(begin, begin + min);
     }
 
     public static String minWindow(String s, String t) {
@@ -63,7 +98,7 @@ public class Topic76 {
                     if (window.get(lc).equals(need.get(lc))) {
                         valid--;
                     }
-                    window.put(lc, window.getOrDefault(lc, 0) - 1);
+                    window.put(lc, window.get(lc) - 1);
                 }
             }
         }

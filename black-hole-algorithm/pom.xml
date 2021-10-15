@@ -26,6 +26,8 @@
     <properties>
         <jol-core.version>0.14</jol-core.version>
         <guava.version>28.2-jre</guava.version>
+        <fastjson.version>1.2.62</fastjson.version>
+        <loombok.version>1.18.6</loombok.version>
     </properties>
 
     <dependencies>
@@ -39,5 +41,21 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${loombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
     </dependencies>
 </project>

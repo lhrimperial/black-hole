@@ -21,49 +21,11 @@ public class Topic47 {
      * <p>输入：nums = [1,1,2] 输出： [[1,1,2], [1,2,1], [2,1,1]]
      */
     public static void main(String[] args) {
-        int[] arr = {1,2, 1};
+        int[] arr = {1, 2, 1};
         // 方法一：使用Set保存结果集
         // 方法二：使用排序+减支
-        List<List<Integer>> result = test(arr);
+        List<List<Integer>> result = permuteUnique(arr);
         System.out.println(result.toString());
-    }
-
-    public static List<List<Integer>> test(int[] nums) {
-        if (nums == null || nums.length < 1) {
-            return Collections.emptyList();
-        }
-        Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        boolean[] used = new boolean[nums.length];
-        dfsTest(nums, nums.length, 0, used, path, result);
-        return result;
-    }
-
-    private static void dfsTest(
-            int[] nums,
-            int len,
-            int depth,
-            boolean[] used,
-            Deque<Integer> path,
-            List<List<Integer>> result) {
-        if (depth == len) {
-            result.add(new ArrayList<>(path));
-            return;
-        }
-        for (int i = 0; i < len; i++) {
-            if (used[i]) {
-                continue;
-            }
-            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
-                continue;
-            }
-            path.addLast(nums[i]);
-            used[i] = true;
-            dfsTest(nums, len, depth + 1, used, path, result);
-            path.removeLast();
-            used[i] = false;
-        }
     }
 
     public static List<List<Integer>> permuteUnique(int[] nums) {
