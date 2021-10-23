@@ -317,6 +317,7 @@
 稳定性：
 1. 高峰时单机经常出现大量NoAvailableThreadException，原因是redis.getResource时间过长，导致高峰时段服务线程被占满，最终查出来是因为redis 的testOnBorrow 和testOnReturn 设置为true了，导致获取redis连接时间增多，在高峰时大批流量进来导致占满了服务线程
 2. 一次countDownLatch 导致的jvm 宕机，查看监控有个响应时间达到了十几二十分钟，CPU飙到140，内存爆满，查看thread dump 文件 发现大量线程卡在countDownLatch，翻看源码发现源码中countDownLatch的countDown 的调用没有放在finaly里面，前面出席异常导致很多线程等待在await里，累计多了内存爆满最终导致内核kill了jvm 
+3. 大分页步长导致的问题
 
 
 
