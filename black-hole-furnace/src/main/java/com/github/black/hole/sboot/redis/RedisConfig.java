@@ -21,7 +21,6 @@ import java.util.Set;
  * @author hairen.long
  * @date 2021/9/13
  */
-@Configuration
 public class RedisConfig {
     private Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
@@ -36,7 +35,7 @@ public class RedisConfig {
     @Value("${spring.redis.commandTimeout}")
     private int commandTimeout;
 
-    @Bean
+//    @Bean
     public JedisCluster getJedisCluster() {
         String[] cNodes = clusterNodes.split(",");
         Set<HostAndPort> nodes = new HashSet<>();
@@ -59,7 +58,7 @@ public class RedisConfig {
      * @param connectionFactory
      * @return
      */
-    @Bean
+//    @Bean
     public RedisTemplate<String, Serializable> redisTemplate(LettuceConnectionFactory connectionFactory) {
         RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());

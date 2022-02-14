@@ -24,6 +24,12 @@ https://www.javadoop.com/post/metaspace
 
 
 
+JIT 在启动时导致RT增加
+
+https://juejin.cn/post/6991655671783489544
+
+
+
 GC 问题定位
 
 https://jishuin.proginn.com/p/763bfbd33cae

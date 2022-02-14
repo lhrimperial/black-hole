@@ -1,11 +1,16 @@
 package com.github.black.hole.algorithm;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,6 +47,13 @@ public class AlgorithmMain {
      * <p>将第n位至0位（含）清零：x & (~((1 << (n + 1)) - 1))
      */
     public static void main(String[] args) {
+        Set<Integer> set = Sets.newHashSet(1, 2, 3, 4);
+        String value = JSON.toJSONString(set);
+        List<Integer> list = JSON.parseArray(value, Integer.class);
+        System.out.println(list);
+    }
+
+    public void test111(){
         int x = 40;
         int digitBit = x & (-x);
         printf(digitBit);

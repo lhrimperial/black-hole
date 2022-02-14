@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisCluster;
  * @author hairen.long
  * @date 2021/9/13
  */
-@Component
+//@Component
 public class RedisBloomFilter<T> {
     private JedisCluster cluster;
 

@@ -1,5 +1,19 @@
 ### UML画
 
+#### PlantUml
+
+ImageInfo <… ImageLoader :依赖关系(在某个方法里通过传参的方式用到了某个类)
+
+WindowManager <-- Window:关联关系(类里面作为属性引用了另一个类)
+
+Company o-- Department:聚合关系（整体和部分）
+
+Bird *-- Wing:组合关系（相比聚合更加紧密的关系，生死与共，不能单独存在）
+
+Factory <|-- PhoneFactory:泛化关系
+
+IColorDraw <|… RedColorDraw:实现关系
+
 
 
 #### UMl类图的几种关系

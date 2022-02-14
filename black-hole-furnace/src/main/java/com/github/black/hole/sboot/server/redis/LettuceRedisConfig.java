@@ -11,10 +11,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author hairen.long
  * @date 2020/9/24
  */
-@Configuration
+//@Configuration
 public class LettuceRedisConfig {
 
-    @Bean
+//    @Bean
     @SuppressWarnings("all")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();

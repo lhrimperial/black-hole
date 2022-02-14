@@ -2,13 +2,17 @@ package com.github.black.hole;
 
 import com.alibaba.fastjson.JSON;
 import com.github.black.hole.sboot.util.AesEncryptUtils;
+import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.openjdk.jol.info.GraphLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -17,16 +21,28 @@ import java.util.stream.LongStream;
 /** Unit test for simple App. */
 public class AppTest {
     public static void main(String[] args) throws Exception {
-        //        String prefix = "hairen.lhr@alibaba-inc.com".replace("@alibaba-inc.com","");
-        //        System.out.println(prefix);
-        List<Integer> list = new ArrayList<>();
-//        list.add(1);
-        String str = list.stream().map(String::valueOf).collect(Collectors.joining(","));
-        System.out.println(str);
-//        List<Long> ids =
-//                LongStream.rangeClosed(1000000, 1050000).boxed().collect(Collectors.toList());
-//        long size1 = GraphLayout.parseInstance(ids).totalSize();
-//        long size2 = GraphLayout.parseInstance(ids.get(0)).totalSize();
+        Set<Long> set1 = Sets.newHashSet();
+        Set<Long> set2 = Sets.newHashSet(1L, 2L, 3L);
+        List<Long> list = Sets.difference(set1, set2).stream().collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(list));
+    }
+
+    private static void validEmoji(String message) {
+        for (int i = 0; i < message.length(); i++) {
+            if (!isNotEmojiCharacter(message.charAt(i))) {
+                throw new IllegalArgumentException("暂不支持Emoji");
+            }
+        }
+    }
+
+    private static boolean isNotEmojiCharacter(char codePoint) {
+        return (codePoint == 0x0)
+                || (codePoint == 0x9)
+                || (codePoint == 0xA)
+                || (codePoint == 0xD)
+                || ((codePoint >= 0x20) && (codePoint <= 0xD7FF))
+                || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD))
+                || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF));
     }
 
     @Test

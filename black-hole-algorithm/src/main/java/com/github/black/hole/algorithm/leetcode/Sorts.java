@@ -129,6 +129,11 @@ public class Sorts {
         }
     }
 
+    /**
+     * 平均效率是O(nlogn)
+     *
+     * @param arr
+     */
     public static void shellSort(int[] arr) {
         int dk = arr.length / 2;
         while (dk > 0) {

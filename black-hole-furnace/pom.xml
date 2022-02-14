@@ -51,6 +51,7 @@
         <apache-commons-email.version>1.5</apache-commons-email.version>
         <okhttp3.version>4.3.1</okhttp3.version>
         <httpclient.version>4.5.13</httpclient.version>
+        <alibaba-dingtalk-service-sdk-version>2.0.0</alibaba-dingtalk-service-sdk-version>
     </properties>
 
     <dependencyManagement>
@@ -145,12 +146,6 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easy-excel.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>alibaba-dingtalk-service-sdk</artifactId>
-                <version>${alibaba-dingtalk.version}</version>
-            </dependency>
-
             <!--spring-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -218,6 +213,11 @@
                 <artifactId>commons-email</artifactId>
                 <version>${apache-commons-email.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+                <version>${alibaba-dingtalk-service-sdk-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -277,10 +277,6 @@
                     <artifactId>commons-codec</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>alibaba-dingtalk-service-sdk</artifactId>
         </dependency>
 
         <!--spring-->
@@ -354,6 +350,10 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibaba-dingtalk-service-sdk</artifactId>
         </dependency>
     </dependencies>
 
