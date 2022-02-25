@@ -151,6 +151,27 @@
 
 
 
+#### Docker 容器原理
+
+> 1. Linux namespace 做进程隔离
+> 2. Linux Cgroup 限制一个进程组能够使用的资源上限，包括CPU、内存、磁盘、网络带宽等
+> 3. roots(根文件系统)，挂载在容器根目录上、用来为容器进程提供隔离后执行环境的文件系统，就是所谓的“容器镜像”，rootfs 只是一个操作系统所包含的文件、配置和目录，并不包括操作系统内核。
+> 4. UnionFS（Union File System），最主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下。
+
+Docker 容器就是一个受隔离和限制的特殊的进程，Docker最核心的原理就是为待创建的用户进程：
+
+- 启动Linux Namespace 配置
+- 设置指定的Cgroup 参数
+- 切换进程的根目录（Change Root）
+
+ Linux 容器的核心实现原理：Linux Namespace 的隔离能力、Linux Cgroups 的限制能力、以及基于 rootfs 的文件系统
+
+
+
+
+
+
+
 #### 附录
 
 ##### 基本原理
