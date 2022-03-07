@@ -29,7 +29,7 @@
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <dubbo.version>2.7.3</dubbo.version>
         <curator.version>4.2.0</curator.version>
-        <zookeeper.version>3.4.13</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
         <zkClient.version>0.9</zkClient.version>
     </properties>
 
