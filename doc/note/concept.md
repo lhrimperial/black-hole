@@ -58,7 +58,19 @@ VLAN（Virtual Local Area Network）即虚拟局域网，是将一个物理的LA
    - TRILL/SPB技术
    - Overlay（VALAN、NVGER、STT）
 
+#### 专有网络VPC
 
+虚拟私有云（Virtual Private Cloud，以下简称VPC），为云服务器、云容器、云数据库等资源构建隔离的、用户自主配置和管理的虚拟网络环境，提升用户云上资源的安全性，简化用户的网络部署。每个专有网络都由至少一个私网网段、一个路由器和至少一个交换机组成。
+
+- 私网网段：在创建专有网络和交换机时，您需要以CIDR地址块的形式指定专有网络使用的私网网段。
+- 路由器（vRouter）是专有网络的枢纽，它可以连接专有网络内的各个交换机，同时也是连接专有网络和其他网络的网关设备。
+- 交换机（vSwitch）是组成专有网络的基础网络设备，用来连接不同的云资源。
+
+
+
+#### VIP
+
+https://www.huaweicloud.com/zhishi/1584666758701.html
 
 
 
@@ -66,6 +78,7 @@ VLAN（Virtual Local Area Network）即虚拟局域网，是将一个物理的LA
 
 1. VM：虚拟机
 2. vSwitch：虚拟交换机
+3. VPC：Virtual Private Cloud
 
 
 

@@ -32,8 +32,8 @@ public class MybatisMain {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(MybatisMain.class, args);
         //        declarative();
-        testLeak();
-        testWhile();
+//        testLeak();
+//        testWhile();
     }
 
     public static void testWhile() {

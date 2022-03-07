@@ -52,10 +52,18 @@
         <okhttp3.version>4.3.1</okhttp3.version>
         <httpclient.version>4.5.13</httpclient.version>
         <alibaba-dingtalk-service-sdk-version>2.0.0</alibaba-dingtalk-service-sdk-version>
+        <jython-standalone.version>2.7.0</jython-standalone.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.python</groupId>
+                <artifactId>jython-standalone</artifactId>
+                <!--python版本是2.x还是3.x在这里指定-->
+                <version>${jython-standalone.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
@@ -354,6 +362,10 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
         </dependency>
     </dependencies>
 

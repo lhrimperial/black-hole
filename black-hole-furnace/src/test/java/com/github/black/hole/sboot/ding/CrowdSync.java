@@ -16,7 +16,6 @@ import com.dingtalk.api.request.OapiUserGetDeptMemberRequest;
 import com.dingtalk.api.request.OapiUserGetRequest;
 import com.dingtalk.api.request.OapiUserListbypageRequest;
 import com.dingtalk.api.request.OapiUserUpdateRequest;
-import com.dingtalk.api.request.OapiV2UserCreateRequest;
 import com.dingtalk.api.response.OapiDepartmentGetResponse;
 import com.dingtalk.api.response.OapiDepartmentListIdsResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
@@ -29,7 +28,6 @@ import com.dingtalk.api.response.OapiUserGetDeptMemberResponse;
 import com.dingtalk.api.response.OapiUserGetResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
 import com.dingtalk.api.response.OapiUserUpdateResponse;
-import com.dingtalk.api.response.OapiV2UserCreateResponse;
 import com.github.black.hole.sboot.SbootMain;
 import com.github.black.hole.sboot.excel.DemoData;
 import com.github.black.hole.sboot.excel.ExcelCellStyle;
@@ -72,8 +70,10 @@ import java.util.stream.Collectors;
 public class CrowdSync {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired DingAppConfig crowdOrgConfig;
-    @Autowired AccessTokenHandler accessTokenHandler;
+    @Autowired
+    DingAppConfig crowdOrgConfig;
+    @Autowired
+    AccessTokenHandler accessTokenHandler;
 
     public static String getToken() throws Exception {
         String appKey = "dinguenpya4moj9yzuju";
@@ -108,25 +108,25 @@ public class CrowdSync {
         request.setId(String.valueOf(371909913));
         DingTalkClient client =
                 new DefaultDingTalkClient("https://oapi.dingtalk.com/department/get");
-        OapiDepartmentGetResponse response = client.execute(request,getToken());
+        OapiDepartmentGetResponse response = client.execute(request, getToken());
     }
 
     @Test
     public void createUserV2() throws Exception {
-        OapiV2UserCreateRequest request = new OapiV2UserCreateRequest();
-        request.setEmail("");
-        request.setMobile("15288462375");
-        request.setName("李自林");
-        request.setDeptIdList("588905765");
-        request.setTitle("骑士");
-        request.setExtension(
-                "{\"最后跑单时间\":\"2022-01-19 19:52:46\",\"七天有效完成单\":\"是\",\"骑士ID\":\"142631138\",\"常驻商圈\":\"昆明五华区高新商圈（快送）\",\"最近七天出勤\":\"7\"}");
-        request.setHideMobile(Boolean.TRUE);
-        request.setSeniorMode(Boolean.TRUE);
-        DingTalkClient client =
-                new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/create");
-        OapiV2UserCreateResponse response = client.execute(request, getToken());
-        System.out.println(JSON.toJSONString(response));
+//        OapiV2UserCreateRequest request = new OapiV2UserCreateRequest();
+//        request.setEmail("");
+//        request.setMobile("15288462375");
+//        request.setName("李自林");
+//        request.setDeptIdList("588905765");
+//        request.setTitle("骑士");
+//        request.setExtension(
+//                "{\"最后跑单时间\":\"2022-01-19 19:52:46\",\"七天有效完成单\":\"是\",\"骑士ID\":\"142631138\",\"常驻商圈\":\"昆明五华区高新商圈（快送）\",\"最近七天出勤\":\"7\"}");
+//        request.setHideMobile(Boolean.TRUE);
+//        request.setSeniorMode(Boolean.TRUE);
+//        DingTalkClient client =
+//                new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/create");
+//        OapiV2UserCreateResponse response = client.execute(request, getToken());
+//        System.out.println(JSON.toJSONString(response));
     }
 
     @Test
