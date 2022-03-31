@@ -31,7 +31,7 @@
         <alibaba-dingtalk.version>1.0.1</alibaba-dingtalk.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <!--spring boot-->
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <!--   DB     -->
         <mysql.version>5.1.40</mysql.version>
         <druid-spring-boot-stater.version>1.1.17</druid-spring-boot-stater.version>
