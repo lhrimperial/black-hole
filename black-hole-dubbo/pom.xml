@@ -23,7 +23,7 @@
         <dubbo-api.version>1.0-SNAPSHOT</dubbo-api.version>
         <!--tools-->
         <guava.version>28.2-jre</guava.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <loombok.version>1.18.6</loombok.version>
 
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
