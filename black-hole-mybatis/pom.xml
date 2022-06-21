@@ -26,7 +26,7 @@
         <logback.version>1.2.3</logback.version>
 
         <!--   DB     -->
-        <mysql.version>5.1.40</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <druid-spring-boot-stater.version>1.1.17</druid-spring-boot-stater.version>
         <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
     </properties>
