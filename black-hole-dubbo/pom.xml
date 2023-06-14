@@ -22,7 +22,7 @@
 
         <dubbo-api.version>1.0-SNAPSHOT</dubbo-api.version>
         <!--tools-->
-        <guava.version>28.2-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <fastjson.version>1.2.62</fastjson.version>
         <loombok.version>1.18.6</loombok.version>
 
