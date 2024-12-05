@@ -49,7 +49,7 @@
         <easy-excel.version>2.2.6</easy-excel.version>
         <apache.poi.version>4.0.1</apache.poi.version>
         <alibaba-dingtalk.version>1.0.1</alibaba-dingtalk.version>
-        <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
         <dubbo.version>2.7.3</dubbo.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.4.13</zookeeper.version>
