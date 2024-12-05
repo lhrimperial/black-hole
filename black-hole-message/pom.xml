@@ -32,7 +32,7 @@
         <kafka-clients.version>2.3.0</kafka-clients.version>
         <meesage-api.version>1.0-SNAPSHOT</meesage-api.version>
 
-        <zookeeper.version>3.4.13</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
     </properties>
 
 
